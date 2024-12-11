@@ -5,11 +5,11 @@ function WelcomeScreen(props) {
     return (
         <ImageBackground 
         style = {styles.background}
-        source = {require('../assets/app_background_fon.png')}
+        source = {require('./app/assets/app_background_fon.png')}
          >
-            <View style = {styles.logoContainer}>
-            <Image style ={style.logo}  source = {require('../assets/sirius_farm_organic_tarim_text.png')}/>
-             </View>
+            
+            <Image style ={style.logo}  source = {require('./app/assets/sirius_farm_organic_tarim_text.png')}/>
+            
         
         <View style = {styles.loginButton}></View> 
         <View style = {styles.registerButton}></View>  
