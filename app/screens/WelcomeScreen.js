@@ -27,7 +27,7 @@ function WelcomeScreen({navigation}) {
             <View style={styles.loginButton}>
                 <TouchableOpacity 
                     style = {styles.imageButton}
-                    onPress={() => Alert.alert("Butona Tıklandı")}>
+                    onPress={() => navigation.navigate('Register')}>
                     <Image
                         style = {styles.image}
                         source = {require('../assets/register_button_design.png')}
