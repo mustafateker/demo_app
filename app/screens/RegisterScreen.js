@@ -29,7 +29,6 @@ function RegisterScreen() {
         }
       
 
-        // Kullanıcıyı ProfileScreen'e yönlendir
         
     };
 

@@ -6,6 +6,7 @@ import WelcomeScreen from './app/screens/WelcomeScreen';
 import LoginScreen from './app/screens/LoginScreen';
 import RegisterScreen from './app/screens/RegisterScreen';
 import ProfileScreen from './app/screens/ProfileScreen'; 
+import MainMenuScreen from './app/screens/MainMenuScreen'; 
 
 const Stack = createStackNavigator();
 
@@ -40,6 +41,12 @@ export default function App() {
           component={ProfileScreen} 
           options={{ headerShown: false, title: 'Profile' }} 
         />
+         <Stack.Screen
+          name="MainMenu"
+          component={MainMenuScreen}
+          options={{ headerShown: false ,title: 'Ana Menü' }}
+        />
+    
       </Stack.Navigator>
     </NavigationContainer>
   );
