@@ -1,10 +1,11 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Image, SafeAreaView } from 'react-native';
-import WelcomeScreen from './app/screens/WelcomeScreen';
-import LoginScreen from './app/screens/LoginScreen';
-import RegisterScreen from './app/screens/RegisterScreen'; // Yeni RegisterScreen import ettik
+import React from 'react';
+import 'react-native-gesture-handler';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import WelcomeScreen from './app/screens/WelcomeScreen';
+import LoginScreen from './app/screens/LoginScreen';
+import RegisterScreen from './app/screens/RegisterScreen';
+import ProfileScreen from './app/screens/ProfileScreen'; 
 
 const Stack = createStackNavigator();
 
@@ -18,7 +19,7 @@ export default function App() {
           component={WelcomeScreen} 
           options={{ headerShown: false, title: 'Welcome' }} 
         />
-        
+
         {/* LoginScreen */}
         <Stack.Screen 
           name="Login" 
@@ -32,16 +33,14 @@ export default function App() {
           component={RegisterScreen} 
           options={{ headerShown: false, title: 'Register' }} 
         />
+
+        {/* ProfileScreen */}
+        <Stack.Screen 
+          name="Profile" 
+          component={ProfileScreen} 
+          options={{ headerShown: false, title: 'Profile' }} 
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-});
