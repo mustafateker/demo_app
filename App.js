@@ -7,6 +7,7 @@ import LoginScreen from './app/screens/LoginScreen';
 import RegisterScreen from './app/screens/RegisterScreen';
 import ProfileScreen from './app/screens/ProfileScreen'; 
 import MainMenuScreen from './app/screens/MainMenuScreen'; 
+import NotificationScreen from './app/screens/NotificationScreen';
 
 const Stack = createStackNavigator();
 
@@ -46,7 +47,12 @@ export default function App() {
           component={MainMenuScreen}
           options={{ headerShown: false ,title: 'Ana Menü' }}
         />
-    
+      <Stack.Screen
+          name="Notifications"
+          component={NotificationScreen}
+          options={{ headerShown: false ,title: 'Bildirimler' }}
+        />
+
       </Stack.Navigator>
     </NavigationContainer>
   );
