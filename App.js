@@ -6,27 +6,28 @@ import WelcomeScreen from './app/screens/WelcomeScreen';
 import LoginScreen from './app/screens/LoginScreen';
 import RegisterScreen from './app/screens/RegisterScreen';
 import ProfileScreen from './app/screens/ProfileScreen'; 
-import MainMenuScreen from './app/screens/MainMenuScreen'; 
 import NotificationScreen from './app/screens/NotificationScreen';
+import SearchScreen from './app/screens/SearchScreen';
+import TasksScreen from './app/screens/TasksScreen';
 
 const Stack = createStackNavigator();
 
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Welcome">
+      <Stack.Navigator initialRouteName="Login">
         {/* WelcomeScreen */}
         <Stack.Screen 
           name="Welcome" 
           component={WelcomeScreen} 
-          options={{ headerShown: false, title: 'Welcome' }} 
+          options={{ headerShown: false, title: 'WelcomeScreen' }} 
         />
 
         {/* LoginScreen */}
         <Stack.Screen 
           name="Login" 
           component={LoginScreen} 
-          options={{ headerShown: false, title: 'Login' }} 
+          options={{ headerShown: false, title: 'LoginScreen' }} 
         />
 
         {/* RegisterScreen */}
@@ -42,17 +43,23 @@ export default function App() {
           component={ProfileScreen} 
           options={{ headerShown: false, title: 'Profile' }} 
         />
-         <Stack.Screen
-          name="MainMenu"
-          component={MainMenuScreen}
-          options={{ headerShown: false ,title: 'Ana Menü' }}
-        />
+
       <Stack.Screen
           name="Notifications"
           component={NotificationScreen}
           options={{ headerShown: false ,title: 'Bildirimler' }}
         />
-
+        <Stack.Screen
+          name="Search"
+          component={SearchScreen}
+          options={{ headerShown: false ,title: 'Uygulama İçinde Ara' }}
+        />
+        <Stack.Screen
+          name="Tasks"
+          component={TasksScreen}
+          options={{ headerShown: false ,title: 'Görevlerim' }}
+        />
+        
       </Stack.Navigator>
     </NavigationContainer>
   );

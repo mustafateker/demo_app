@@ -21,7 +21,7 @@ const LoginScreen = () => {
 
   const handlePress = () => {
     Alert.alert("Giriş Başarılı");
-    navigation.navigate('MainMenu');
+    navigation.navigate('Welcome');
     
 };
   return (
@@ -70,7 +70,9 @@ const LoginScreen = () => {
           <Text style={styles.forgotPassword}>Parolamı Unuttum</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.createAccountButton}>
+        <TouchableOpacity style={styles.createAccountButton}
+        onPress={() => navigation.navigate('Register')}
+        >
           <Text style={styles.createAccountText}>HESAP OLUŞTUR</Text>
         </TouchableOpacity>
       </View>

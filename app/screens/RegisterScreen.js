@@ -17,19 +17,21 @@ function RegisterScreen() {
     const navigation = useNavigation();
 
     const handlePress = () => {
-        Alert.alert("kayıt başarılı");
-        navigation.navigate('Profile');
+        // Şifre eşleşmesi kontrolü
         if (password !== confirmPassword) {
-            console.log("Şifreler uyuşmuyor!");
+            Alert.alert("Hata", "Şifreler uyuşmuyor!");
             return;
         }
-        if (!isTermsAccepted) {
-            console.log("Kullanıcı şartlarını kabul etmelisiniz!");
-            return;
-        }
-      
 
-        
+        // Kullanıcı şartlarını kabul kontrolü
+        if (!isTermsAccepted) {
+            Alert.alert("Hata", "Kullanıcı şartlarını kabul etmelisiniz!");
+            return;
+        }
+
+        // Eğer tüm kontroller başarılıysa
+        Alert.alert("Başarılı", "Kayıt başarılı!");
+        navigation.navigate('Welcome'); // WelcomeScreen 'e yönlendirme
     };
 
     return (

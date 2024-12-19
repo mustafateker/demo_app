@@ -1,7 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView } from 'react-native';
 
 const WelcomeScreen = ({ navigation }) => {
   return (
@@ -16,30 +14,61 @@ const WelcomeScreen = ({ navigation }) => {
       {/* Grid Alanı */}
       <View style={styles.grid}>
         {/* Günlük Bilgi */}
-        <TouchableOpacity style={styles.item}>
-          <Icon name="info" size={40} color="#4CAF50" />
+        <TouchableOpacity style={styles.hexagon}>
+          <Image source={require('../assets/daily_information_main_menu_button.png')} style={styles.hexImage} />
           <Text style={styles.itemText}>Günlük Bilgi</Text>
         </TouchableOpacity>
 
-        {/* Görevler */}
-        <TouchableOpacity style={styles.item}>
-          <Icon name="event" size={40} color="#4CAF50" />
+        {/* Görevlerim */}
+        <TouchableOpacity 
+          style={styles.hexagon}
+          onPress={() => navigation.navigate('Tasks')} 
+          >
+          <Image source={require('../assets/tasks_main_menu_button.png')} style={styles.hexImage} />
           <Text style={styles.itemText}>Görevler</Text>
         </TouchableOpacity>
 
         {/* Profilim */}
-        <TouchableOpacity style={styles.item}>
-          <Icon name="person" size={40} color="#4CAF50" />
+        <TouchableOpacity
+          style={styles.hexagon}
+          onPress={() => navigation.navigate('Profile')} // ProfileScreen'e yönlendirme
+        >
+          <Image source={require('../assets/profile_main_menu_button_design.png')} style={styles.hexImage} />
           <Text style={styles.itemText}>Profilim</Text>
         </TouchableOpacity>
 
         {/* Maliyet Hesapla */}
-        <TouchableOpacity 
-          style={styles.item}
-          onPress={() => navigation.navigate('Notifications')} // Bildirimler sayfasına yönlendirme
+        <TouchableOpacity
+          style={styles.hexagon}
+          onPress={() => navigation.navigate('Notifications')}
         >
-          <Icon name="calculate" size={40} color="#4CAF50" />
+          <Image source={require('../assets/cost_calculation_button_design.png')} style={styles.hexImage} />
           <Text style={styles.itemText}>Maliyet Hesapla</Text>
+        </TouchableOpacity>
+
+        {/* Eğitimler */}
+        <TouchableOpacity style={styles.hexagon}>
+          <Image source={require('../assets/education_main_menu_button.png')} style={styles.hexImage} />
+          <Text style={styles.itemText}>Eğitimler</Text>
+        </TouchableOpacity>
+
+        {/* Taleplerim */}
+        <TouchableOpacity style={styles.hexagon}>
+          <Image source={require('../assets/request_button_icon.png')} style={styles.hexImage} />
+          <Text style={styles.itemText}>Taleplerim</Text>
+        </TouchableOpacity>
+
+        {/* Sirius Nedir? */}
+        <TouchableOpacity style={styles.hexagon}
+          onPress={() => navigation.navigate('Search')} >
+          <Image source={require('../assets/sirius_nedir_button_design.png')} style={styles.hexImage} />
+          <Text style={styles.itemText}>Sirius Nedir?</Text>
+        </TouchableOpacity>
+
+        {/* Siribot */}
+        <TouchableOpacity style={styles.hexagon}>
+          <Image source={require('../assets/siribot_button_design.png')} style={styles.hexImage} />
+          <Text style={styles.itemText}>Siribot</Text>
         </TouchableOpacity>
       </View>
     </ScrollView>
@@ -77,23 +106,27 @@ const styles = StyleSheet.create({
   grid: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    justifyContent: 'space-around',
+    justifyContent: 'center',
     marginVertical: 20,
   },
-  item: {
-    width: '40%',
-    aspectRatio: 1,
-    backgroundColor: '#E8F5E9',
-    borderRadius: 20,
+  hexagon: {
+    width: 100,
+    height: 115,
+    margin: 10,
     alignItems: 'center',
     justifyContent: 'center',
-    marginVertical: 10,
-    elevation: 3,
+    position: 'relative',
+  },
+  hexImage: {
+    width: 100,
+    height: 100,
+    resizeMode: 'contain',
   },
   itemText: {
     marginTop: 10,
     fontSize: 14,
     fontWeight: 'bold',
+    textAlign: 'center',
     color: '#4CAF50',
   },
 });
