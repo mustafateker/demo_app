@@ -1,10 +1,13 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Image, SafeAreaView } from 'react-native';
-import WelcomeScreen from './app/screens/WelcomeScreen';
-import LoginScreen from './app/screens/LoginScreen';
-import RegisterScreen from './app/screens/RegisterScreen'; // Yeni RegisterScreen import ettik
+import React from 'react';
+import 'react-native-gesture-handler';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import WelcomeScreen from './app/screens/WelcomeScreen';
+import LoginScreen from './app/screens/LoginScreen';
+import RegisterScreen from './app/screens/RegisterScreen';
+import ProfileScreen from './app/screens/ProfileScreen'; 
+import MainMenuScreen from './app/screens/MainMenuScreen'; 
+import NotificationScreen from './app/screens/NotificationScreen';
 
 const Stack = createStackNavigator();
 
@@ -18,7 +21,7 @@ export default function App() {
           component={WelcomeScreen} 
           options={{ headerShown: false, title: 'Welcome' }} 
         />
-        
+
         {/* LoginScreen */}
         <Stack.Screen 
           name="Login" 
@@ -32,16 +35,25 @@ export default function App() {
           component={RegisterScreen} 
           options={{ headerShown: false, title: 'Register' }} 
         />
+
+        {/* ProfileScreen */}
+        <Stack.Screen 
+          name="Profile" 
+          component={ProfileScreen} 
+          options={{ headerShown: false, title: 'Profile' }} 
+        />
+         <Stack.Screen
+          name="MainMenu"
+          component={MainMenuScreen}
+          options={{ headerShown: false ,title: 'Ana Menü' }}
+        />
+      <Stack.Screen
+          name="Notifications"
+          component={NotificationScreen}
+          options={{ headerShown: false ,title: 'Bildirimler' }}
+        />
+
       </Stack.Navigator>
     </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-});

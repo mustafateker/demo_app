@@ -1,91 +1,101 @@
 import React from 'react';
-import { Image, ImageBackground, StyleSheet, View, Text,
-     Button ,Alert, TouchableOpacity, handlePress, 
-     TouchableHighlight} from 'react-native'; 
+import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
+const WelcomeScreen = ({ navigation }) => {
+  return (
+    <ScrollView style={styles.container}>
+      {/* Üst Logo Alanı */}
+      <View style={styles.header}>
+        <Image source={require('../assets/sirius_farm_organic_tarim_text.png')} style={styles.logo} />
+        <Text style={styles.title}>SIRIUS</Text>
+        <Text style={styles.subtitle}>Dikey Tarım</Text>
+      </View>
 
-function WelcomeScreen({navigation}) {
-    return (
-        <ImageBackground 
-        style={styles.background}
-        source={require('../assets/app_background_fon.png')}>
-            <View style = {styles.logoContainer}>
-            <Image 
-            style={styles.logo} 
-            source={require('../assets/sirius_farm_organic_tarim_text.png')} />
-            </View>
-            <View style={styles.loginButton}>
-            <TouchableOpacity 
-            style = {styles.imageButton}
-            onPress={()=> navigation.navigate('Login')}>
-            <Image
-                style = {styles.image}
-                source = {require('../assets/login_button_design.png')}
-                />
-            </TouchableOpacity>
-            </View> 
-            <View style={styles.loginButton}>
-                <TouchableOpacity 
-                    style = {styles.imageButton}
-                    onPress={() => navigation.navigate('Register')}>
-                    <Image
-                        style = {styles.image}
-                        source = {require('../assets/register_button_design.png')}
-                        />
-                </TouchableOpacity>
-            </View>  
-        </ImageBackground>
-    );
-}
+      {/* Grid Alanı */}
+      <View style={styles.grid}>
+        {/* Günlük Bilgi */}
+        <TouchableOpacity style={styles.item}>
+          <Icon name="info" size={40} color="#4CAF50" />
+          <Text style={styles.itemText}>Günlük Bilgi</Text>
+        </TouchableOpacity>
+
+        {/* Görevler */}
+        <TouchableOpacity style={styles.item}>
+          <Icon name="event" size={40} color="#4CAF50" />
+          <Text style={styles.itemText}>Görevler</Text>
+        </TouchableOpacity>
+
+        {/* Profilim */}
+        <TouchableOpacity style={styles.item}>
+          <Icon name="person" size={40} color="#4CAF50" />
+          <Text style={styles.itemText}>Profilim</Text>
+        </TouchableOpacity>
+
+        {/* Maliyet Hesapla */}
+        <TouchableOpacity 
+          style={styles.item}
+          onPress={() => navigation.navigate('Notifications')} // Bildirimler sayfasına yönlendirme
+        >
+          <Icon name="calculate" size={40} color="#4CAF50" />
+          <Text style={styles.itemText}>Maliyet Hesapla</Text>
+        </TouchableOpacity>
+      </View>
+    </ScrollView>
+  );
+};
 
 const styles = StyleSheet.create({
-    background: {
-        flex: 1,
-        justifyContent: "flex-end",
-        alignItems: "center",
-    },
-    loginButton: {
-        width: '100%',
-        height: 70,
-        alignContent : "center",
-        justifyContent: 'center',
-        alignItems: 'center',
-        flexDirection : "row",
-        marginVertical : "8",
-        marginHorizontal : "16",
-    },
-    logo: {
-        width: 368,
-        height: 226,
-    },
-    logoContainer: {
-        position: "absolute",
-        top: 70,
-    },
-
-    buttonTexts : {
-        color : "white",
-        position:"center",
-
-    },
-    title: {
-        textAlign : "center",
-        marginVertical : "8",
-    },
-    imageButton : {
-        flex: 1, // Alanı tamamen kapla
-        width: '100%', // Parent genişliğini kapla
-        height: '100%', // Parent yüksekliğini kapla
-    
-    },
-    image: {
-        marginHorizontal : 8,
-        flex: 1,
-        width: undefined,
-        height: undefined,
-        resizeMode: 'contain', 
-    },
-    
+  container: {
+    flex: 1,
+    backgroundColor: '#F9FFF6',
+  },
+  header: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 20,
+    backgroundColor: '#4CAF50',
+    borderBottomLeftRadius: 50,
+    borderBottomRightRadius: 50,
+  },
+  logo: {
+    width: 80,
+    height: 80,
+    marginBottom: 10,
+  },
+  title: {
+    fontSize: 36,
+    fontWeight: 'bold',
+    color: '#FFF',
+  },
+  subtitle: {
+    fontSize: 20,
+    fontStyle: 'italic',
+    color: '#FFF',
+  },
+  grid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-around',
+    marginVertical: 20,
+  },
+  item: {
+    width: '40%',
+    aspectRatio: 1,
+    backgroundColor: '#E8F5E9',
+    borderRadius: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginVertical: 10,
+    elevation: 3,
+  },
+  itemText: {
+    marginTop: 10,
+    fontSize: 14,
+    fontWeight: 'bold',
+    color: '#4CAF50',
+  },
 });
 
 export default WelcomeScreen;
