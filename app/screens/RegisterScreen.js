@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { ImageBackground, Image, View, StyleSheet, TouchableOpacity, TextInput, Text } from 'react-native';
-import CheckBox from 'react-native-check-box'; // react-native-check-box eklendi
+import { ImageBackground, Image, View, StyleSheet, TouchableOpacity, TextInput, Text, Alert } from 'react-native';
+import CheckBox from 'react-native-check-box';
 import { useNavigation } from '@react-navigation/native';
 
 function RegisterScreen() {
@@ -10,30 +10,28 @@ function RegisterScreen() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
-    const [isTermsAccepted, setIsTermsAccepted] = useState(false); // 1. Checkbox
-    const [isKVKKAccepted, setIsKVKKAccepted] = useState(false); // 2. Checkbox
-    const [isNewsletterSubscribed, setIsNewsletterSubscribed] = useState(false); // 3. Checkbox
+    const [isTermsAccepted, setIsTermsAccepted] = useState(false);
+    const [isKVKKAccepted, setIsKVKKAccepted] = useState(false);
+    const [isNewsletterSubscribed, setIsNewsletterSubscribed] = useState(false);
 
     const navigation = useNavigation();
 
     const handlePress = () => {
+        // Şifre eşleşmesi kontrolü
         if (password !== confirmPassword) {
-            console.log("Şifreler uyuşmuyor!");
+            Alert.alert("Hata", "Şifreler uyuşmuyor!");
             return;
         }
-        if (!isTermsAccepted) {
-            console.log("Kullanıcı şartlarını kabul etmelisiniz!");
-            return;
-        }
-        console.log("Mail:", email);
-        console.log("İsim:", firstName);
-        console.log("Soyisim:", lastName);
-        console.log("Kullanıcı Adı:", username);
-        console.log("Şifre:", password);
-        console.log("KVKK Onayı:", isKVKKAccepted);
-        console.log("Bülten Aboneliği:", isNewsletterSubscribed);
 
-        navigation.navigate('Home');
+        // Kullanıcı şartlarını kabul kontrolü
+        if (!isTermsAccepted) {
+            Alert.alert("Hata", "Kullanıcı şartlarını kabul etmelisiniz!");
+            return;
+        }
+
+        // Eğer tüm kontroller başarılıysa
+        Alert.alert("Başarılı", "Kayıt başarılı!");
+        navigation.navigate('Welcome'); // WelcomeScreen 'e yönlendirme
     };
 
     return (
@@ -89,7 +87,6 @@ function RegisterScreen() {
                 />
             </View>
 
-            {/* CheckBox Alanları */}
             <View style={styles.checkboxContainer}>
                 <CheckBox
                     isChecked={isTermsAccepted}
@@ -144,7 +141,7 @@ const styles = StyleSheet.create({
     checkboxContainer: {
         width: '90%',
         marginBottom: 20,
-        alignItems: 'flex-start', // Checkboxları sola hizala
+        alignItems: 'flex-start',
     },
     imageButton: {
         width: "80%",

@@ -1,108 +1,127 @@
 import React, { useState } from 'react';
-import { ImageBackground, Image, View, StyleSheet, TouchableOpacity, TextInput, Text } from 'react-native';
+import {
+    Alert,
+    handlePress,
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  StyleSheet,
+  ImageBackground,
+} from 'react-native';
+import CheckBox from 'react-native-check-box';
+import { useNavigation } from '@react-navigation/native';
 
-function LoginScreen() {
-    const [username, setUsername] = useState(""); // Kullanıcı adı için state
-    const [password, setPassword] = useState(""); // Şifre için state
+const LoginScreen = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [rememberMe, setRememberMe] = useState(false);
 
-    const handlePress = () => {
-        console.log("Username:", username);
-        console.log("Password:", password);
-        // Burada giriş işlemleri yapılabilir
-    };
+  const navigation = useNavigation(); // Navigasyon objesi
 
-    return (
-        <ImageBackground 
-            style={styles.background}
-            source={require('../assets/app_background_fon.png')}>
-            <View style={styles.logoContainer}>
-                <Image 
-                    style={styles.logo} 
-                    source={require('../assets/sirius_farm_organic_tarim_text.png')} 
-                />
-            </View>
+  const handlePress = () => {
+    Alert.alert("Giriş Başarılı");
+    navigation.navigate('Welcome');
+    
+};
+  return (
+    <ImageBackground
+      source={require('../assets/app_background_fon.png')}
+      style={styles.background}
+    >
+      <View style={styles.container}>
+        <Text style={styles.title}>SIRIUS</Text>
+        <Text style={styles.subtitle}>Dikey Tarım</Text>
 
-            <View style={styles.inputContainer}>
-                <TextInput
-                    style={styles.input}
-                    placeholder="Kullanıcı Adı"
-                    placeholderTextColor="#888"
-                    value={username}
-                    onChangeText={text => setUsername(text)} // Kullanıcı adını state'e kaydet
-                />
-                <TextInput
-                    style={styles.input}
-                    placeholder="Şifre"
-                    placeholderTextColor="#888"
-                    secureTextEntry // Şifreyi gizlemek için
-                    value={password}
-                    onChangeText={text => setPassword(text)} // Şifreyi state'e kaydet
-                />
-            </View>
+        <Text style={styles.loginText}>GİRİŞ</Text>
 
-            <View style={styles.loginButton}>
-                <TouchableOpacity
-                    style={styles.imageButton}
-                    onPress={handlePress}>
-                    <Image 
-                        style={styles.image}
-                        source={require('../assets/login_button_design.png')} 
-                    />
-                </TouchableOpacity>
-            </View>
-        </ImageBackground>
-    );
-}
+        <TextInput
+          style={styles.input}
+          placeholder="Kullanıcı Adı, eposta ya da telefon numarası"
+          placeholderTextColor="#888"
+          value={email}
+          onChangeText={(text) => setEmail(text)}
+        />
+
+        <TextInput
+          style={styles.input}
+          placeholder="Parola"
+          placeholderTextColor="#888"
+          secureTextEntry
+          value={password}
+          onChangeText={(text) => setPassword(text)}
+        />
+
+        <View style={styles.checkboxContainer}>
+          <CheckBox
+            value={rememberMe}
+            onValueChange={setRememberMe}
+            style={styles.checkbox}
+          />
+          <Text style={styles.label}>Beni Hatırla</Text>
+        </View>
+
+        {/* Giriş Yap Butonu */}
+        <TouchableOpacity style={styles.loginButton} onPress={handlePress}>
+          <Text style={styles.loginButtonText}>GİRİŞ YAP</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity>
+          <Text style={styles.forgotPassword}>Parolamı Unuttum</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={styles.createAccountButton}
+        onPress={() => navigation.navigate('Register')}
+        >
+          <Text style={styles.createAccountText}>HESAP OLUŞTUR</Text>
+        </TouchableOpacity>
+      </View>
+    </ImageBackground>
+  );
+};
 
 const styles = StyleSheet.create({
-    background: {
-        flex: 1,
-        justifyContent: "flex-end",
-        alignItems: "center",
-    },
-    inputContainer: {
-        width: '100%',
-        paddingHorizontal: 20,
-        marginBottom: 20,
-    },
-    input: {
-        backgroundColor: '#fff',
-        height: 50,
-        borderRadius: 8,
-        paddingHorizontal: 15,
-        marginBottom: 15,
-        fontSize: 16,
-    },
-    imageButton: {
-        width: "80%",
-        height: 50,
-        justifyContent: "center",
-        alignItems: "center",
-    },
-    loginButton: {
-        width: '100%',
-        height: 70,
-        justifyContent: "center",
-        alignItems: "center",
-        marginVertical: 8,
-    },
-    baseText: {
-        fontFamily: 'Roboto',
-    },
-    logoContainer: {
-        position: "absolute",
-        top: 50,
-        alignItems: "center",
-    },
-    logo: {
-        width: 368,
-        height: 226,
-    },
-    image: {
-        width: "100%",
-        height: "100%",
-        resizeMode: "contain",
-    },
+  background: 
+  { flex: 1,
+     resizeMode: 'cover', 
+     justifyContent: 'center' },
+
+  container: { paddingHorizontal: 20, alignItems: 'center' },
+  title: { fontSize: 48, fontWeight: 'bold', color: '#FFF' },
+  subtitle: { fontSize: 24, fontStyle: 'italic', color: '#FFF', marginBottom: 40 },
+  loginText: { fontSize: 24, fontWeight: 'bold', color: '#FFF', marginBottom: 10 },
+  input: {
+    width: '100%',
+    height: 50,
+    backgroundColor: '#FFF',
+    borderRadius: 8,
+    paddingHorizontal: 15,
+    marginBottom: 20,
+    fontSize: 14,
+    color: '#333',
+  },
+  checkboxContainer: { flexDirection: 'row', alignItems: 'center', marginBottom: 20 },
+  checkbox: { alignSelf: 'center' },
+  label: { marginLeft: 10, fontSize: 14, color: '#FFF' },
+  loginButton: {
+    backgroundColor: '#2E7D32',
+    width: '100%',
+    padding: 15,
+    borderRadius: 8,
+    alignItems: 'center',
+    marginBottom: 10,
+  },
+  loginButtonText: { color: '#FFF', fontSize: 16, fontWeight: 'bold' },
+  forgotPassword: { color: '#FFF', textDecorationLine: 'underline', marginBottom: 30 },
+  createAccountButton: {
+    backgroundColor: '#FFF',
+    width: '100%',
+    padding: 15,
+    borderRadius: 8,
+    alignItems: 'center',
+    marginTop: 10,
+  },
+  createAccountText: { color: '#2E7D32', fontSize: 16, fontWeight: 'bold' },
 });
 
 export default LoginScreen;
