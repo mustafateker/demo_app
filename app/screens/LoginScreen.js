@@ -67,7 +67,9 @@ const LoginScreen = () => {
           <Text style={styles.loginButtonText}>GİRİŞ YAP</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.forgotPasswordButton}>
+        <TouchableOpacity style={styles.forgotPasswordButton}
+        onPress={() => navigation.navigate('Password')}
+        >
           <Text style={styles.forgotPassword}>Parolamı Unuttum</Text>
         </TouchableOpacity>
 
