@@ -1,30 +1,38 @@
 import React, { useState } from 'react';
 import { ImageBackground, Image, View, StyleSheet, TouchableOpacity, TextInput, Text } from 'react-native';
-import { useNavigation } from '@react-navigation/native'; // useNavigation hook'u
+import CheckBox from 'react-native-check-box'; // react-native-check-box eklendi
+import { useNavigation } from '@react-navigation/native';
 
 function RegisterScreen() {
-    const [email, setEmail] = useState(""); 
-    const [firstName, setFirstName] = useState(""); 
-    const [lastName, setLastName] = useState(""); 
-    const [username, setUsername] = useState(""); 
-    const [password, setPassword] = useState(""); 
-    const [confirmPassword, setConfirmPassword] = useState(""); 
+    const [email, setEmail] = useState("");
+    const [firstName, setFirstName] = useState("");
+    const [lastName, setLastName] = useState("");
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("");
+    const [isTermsAccepted, setIsTermsAccepted] = useState(false); // 1. Checkbox
+    const [isKVKKAccepted, setIsKVKKAccepted] = useState(false); // 2. Checkbox
+    const [isNewsletterSubscribed, setIsNewsletterSubscribed] = useState(false); // 3. Checkbox
 
-    const navigation = useNavigation(); // Navigation hook'u
+    const navigation = useNavigation();
 
     const handlePress = () => {
         if (password !== confirmPassword) {
             console.log("Şifreler uyuşmuyor!");
             return;
         }
-        // Kayıt işlemi başarılıysa, kullanıcıyı Home ekranına yönlendiriyoruz
+        if (!isTermsAccepted) {
+            console.log("Kullanıcı şartlarını kabul etmelisiniz!");
+            return;
+        }
         console.log("Mail:", email);
         console.log("İsim:", firstName);
         console.log("Soyisim:", lastName);
         console.log("Kullanıcı Adı:", username);
         console.log("Şifre:", password);
+        console.log("KVKK Onayı:", isKVKKAccepted);
+        console.log("Bülten Aboneliği:", isNewsletterSubscribed);
 
-        // Home ekranına yönlendir
         navigation.navigate('Home');
     };
 
@@ -81,6 +89,28 @@ function RegisterScreen() {
                 />
             </View>
 
+            {/* CheckBox Alanları */}
+            <View style={styles.checkboxContainer}>
+                <CheckBox
+                    isChecked={isTermsAccepted}
+                    onClick={() => setIsTermsAccepted(!isTermsAccepted)}
+                    rightText="Kullanıcı şartlarını kabul ediyorum"
+                    rightTextStyle={{ color: '#fff' }}
+                />
+                <CheckBox
+                    isChecked={isKVKKAccepted}
+                    onClick={() => setIsKVKKAccepted(!isKVKKAccepted)}
+                    rightText="KVKK Açık Rıza Metnini onaylıyorum"
+                    rightTextStyle={{ color: '#fff' }}
+                />
+                <CheckBox
+                    isChecked={isNewsletterSubscribed}
+                    onClick={() => setIsNewsletterSubscribed(!isNewsletterSubscribed)}
+                    rightText="Elektronik posta ve ileti almak istiyorum"
+                    rightTextStyle={{ color: '#fff' }}
+                />
+            </View>
+
             <View style={styles.loginButton}>
                 <TouchableOpacity
                     style={styles.imageButton}
@@ -110,6 +140,11 @@ const styles = StyleSheet.create({
         paddingHorizontal: 15,
         marginBottom: 15,
         fontSize: 16,
+    },
+    checkboxContainer: {
+        width: '90%',
+        marginBottom: 20,
+        alignItems: 'flex-start', // Checkboxları sola hizala
     },
     imageButton: {
         width: "80%",
