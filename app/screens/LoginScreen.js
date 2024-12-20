@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import {
     Alert,
-    handlePress,
-  View,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  StyleSheet,
-  ImageBackground,
+    View,
+    Text,
+    TextInput,
+    TouchableOpacity,
+    StyleSheet,
+    ImageBackground,
+    Image,
 } from 'react-native';
 import CheckBox from 'react-native-check-box';
 import { useNavigation } from '@react-navigation/native';
@@ -17,21 +17,23 @@ const LoginScreen = () => {
   const [password, setPassword] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
 
-  const navigation = useNavigation(); // Navigasyon objesi
+  const navigation = useNavigation();
 
   const handlePress = () => {
     Alert.alert("Giriş Başarılı");
     navigation.navigate('Welcome');
-    
-};
+  };
+
   return (
     <ImageBackground
       source={require('../assets/app_background_fon.png')}
       style={styles.background}
     >
       <View style={styles.container}>
-        <Text style={styles.title}>SIRIUS</Text>
-        <Text style={styles.subtitle}>Dikey Tarım</Text>
+        <Image
+          source={require('../assets/sirius_farm_organic_tarim_text.png')}
+          style={styles.logo}
+        />
 
         <Text style={styles.loginText}>GİRİŞ</Text>
 
@@ -40,7 +42,7 @@ const LoginScreen = () => {
           placeholder="Kullanıcı Adı, eposta ya da telefon numarası"
           placeholderTextColor="#888"
           value={email}
-          onChangeText={(text) => setEmail(text)}
+          onChangeText={setEmail}
         />
 
         <TextInput
@@ -49,29 +51,29 @@ const LoginScreen = () => {
           placeholderTextColor="#888"
           secureTextEntry
           value={password}
-          onChangeText={(text) => setPassword(text)}
+          onChangeText={setPassword}
         />
 
-        <View style={styles.checkboxContainer}>
+        <View style={styles.rememberMeContainer}>
           <CheckBox
-            value={rememberMe}
-            onValueChange={setRememberMe}
+            isChecked={rememberMe}
+            onClick={() => setRememberMe(!rememberMe)}
             style={styles.checkbox}
           />
           <Text style={styles.label}>Beni Hatırla</Text>
         </View>
 
-        {/* Giriş Yap Butonu */}
         <TouchableOpacity style={styles.loginButton} onPress={handlePress}>
           <Text style={styles.loginButtonText}>GİRİŞ YAP</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity>
+        <TouchableOpacity style={styles.forgotPasswordButton}>
           <Text style={styles.forgotPassword}>Parolamı Unuttum</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.createAccountButton}
-        onPress={() => navigation.navigate('Register')}
+        <TouchableOpacity
+          style={styles.createAccountButton}
+          onPress={() => navigation.navigate('Register')}
         >
           <Text style={styles.createAccountText}>HESAP OLUŞTUR</Text>
         </TouchableOpacity>
@@ -81,28 +83,59 @@ const LoginScreen = () => {
 };
 
 const styles = StyleSheet.create({
-  background: 
-  { flex: 1,
-     resizeMode: 'cover', 
-     justifyContent: 'center' },
-
-  container: { paddingHorizontal: 20, alignItems: 'center' },
-  title: { fontSize: 48, fontWeight: 'bold', color: '#FFF' },
-  subtitle: { fontSize: 24, fontStyle: 'italic', color: '#FFF', marginBottom: 40 },
-  loginText: { fontSize: 24, fontWeight: 'bold', color: '#FFF', marginBottom: 10 },
+  background: {
+    flex: 1,
+    resizeMode: 'cover',
+    justifyContent: 'center',
+  },
+  container: {
+    paddingHorizontal: 20,
+    alignItems: 'center',
+  },
+  logo: {
+    width: 300,
+    height: 180,
+    resizeMode: 'contain',
+    marginBottom: 40,
+  },
+  loginText: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#FFF',
+    marginBottom: 20,
+  },
   input: {
     width: '100%',
     height: 50,
     backgroundColor: '#FFF',
     borderRadius: 8,
     paddingHorizontal: 15,
-    marginBottom: 20,
+    marginBottom: 15,
     fontSize: 14,
     color: '#333',
   },
-  checkboxContainer: { flexDirection: 'row', alignItems: 'center', marginBottom: 20 },
-  checkbox: { alignSelf: 'center' },
-  label: { marginLeft: 10, fontSize: 14, color: '#FFF' },
+  rememberMeContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    alignSelf: 'flex-start',
+    marginBottom: 20,
+  },
+  checkbox: {
+    alignSelf: 'center',
+  },
+  label: {
+    marginLeft: 10,
+    fontSize: 14,
+    color: '#FFF',
+  },
+  forgotPasswordButton: {
+    alignSelf: 'center',
+    marginVertical: 20,
+  },
+  forgotPassword: {
+    color: '#FFF',
+    textDecorationLine: 'underline',
+  },
   loginButton: {
     backgroundColor: '#2E7D32',
     width: '100%',
@@ -111,17 +144,24 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 10,
   },
-  loginButtonText: { color: '#FFF', fontSize: 16, fontWeight: 'bold' },
-  forgotPassword: { color: '#FFF', textDecorationLine: 'underline', marginBottom: 30 },
+  loginButtonText: {
+    color: '#FFF',
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
   createAccountButton: {
     backgroundColor: '#FFF',
     width: '100%',
     padding: 15,
     borderRadius: 8,
     alignItems: 'center',
-    marginTop: 10,
+    marginTop: 20,
   },
-  createAccountText: { color: '#2E7D32', fontSize: 16, fontWeight: 'bold' },
+  createAccountText: {
+    color: '#2E7D32',
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
 });
 
 export default LoginScreen;

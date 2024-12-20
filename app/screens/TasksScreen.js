@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import { Calendar } from 'react-native-calendars';
 
-const TaskScreen = () => {
+const TasksScreen = () => {
   const [tasks, setTasks] = useState([
     {
       id: '1',

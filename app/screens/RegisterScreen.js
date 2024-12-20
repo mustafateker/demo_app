@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ImageBackground, Image, View, StyleSheet, TouchableOpacity, TextInput, Text, Alert } from 'react-native';
+import { ImageBackground, Image, View, StyleSheet, TouchableOpacity, TextInput, Text, Alert, ScrollView } from 'react-native';
 import CheckBox from 'react-native-check-box';
 import { useNavigation } from '@react-navigation/native';
 
@@ -17,104 +17,55 @@ function RegisterScreen() {
     const navigation = useNavigation();
 
     const handlePress = () => {
-        // Şifre eşleşmesi kontrolü
         if (password !== confirmPassword) {
             Alert.alert("Hata", "Şifreler uyuşmuyor!");
             return;
         }
 
-        // Kullanıcı şartlarını kabul kontrolü
         if (!isTermsAccepted) {
             Alert.alert("Hata", "Kullanıcı şartlarını kabul etmelisiniz!");
             return;
         }
 
-        // Eğer tüm kontroller başarılıysa
         Alert.alert("Başarılı", "Kayıt başarılı!");
-        navigation.navigate('Welcome'); // WelcomeScreen 'e yönlendirme
+        navigation.navigate('Welcome');
     };
 
     return (
         <ImageBackground style={styles.background} source={require('../assets/app_background_fon.png')}>
-            <View style={styles.logoContainer}>
-                <Image style={styles.logo} source={require('../assets/sirius_farm_organic_tarim_text.png')} />
-            </View>
+            <ScrollView contentContainerStyle={styles.scrollContainer}>
+                <View style={styles.logoContainer}>
+                    <Image style={styles.logo} source={require('../assets/sirius_farm_organic_tarim_text.png')} />
+                </View>
 
-            <View style={styles.inputContainer}>
-                <TextInput
-                    style={styles.input}
-                    placeholder="Mail adresiniz"
-                    placeholderTextColor="#888"
-                    value={email}
-                    onChangeText={text => setEmail(text)}
-                />
-                <TextInput
-                    style={styles.input}
-                    placeholder="İsim"
-                    placeholderTextColor="#888"
-                    value={firstName}
-                    onChangeText={text => setFirstName(text)}
-                />
-                <TextInput
-                    style={styles.input}
-                    placeholder="Soyisim"
-                    placeholderTextColor="#888"
-                    value={lastName}
-                    onChangeText={text => setLastName(text)}
-                />
-                <TextInput
-                    style={styles.input}
-                    placeholder="Kullanıcı Adı"
-                    placeholderTextColor="#888"
-                    value={username}
-                    onChangeText={text => setUsername(text)}
-                />
-                <TextInput
-                    style={styles.input}
-                    placeholder="Şifre"
-                    placeholderTextColor="#888"
-                    secureTextEntry
-                    value={password}
-                    onChangeText={text => setPassword(text)}
-                />
-                <TextInput
-                    style={styles.input}
-                    placeholder="Şifre Tekrar"
-                    placeholderTextColor="#888"
-                    secureTextEntry
-                    value={confirmPassword}
-                    onChangeText={text => setConfirmPassword(text)}
-                />
-            </View>
+                <View style={styles.inputContainer}>
+                    <TextInput style={styles.input} placeholder="Mail adresiniz" placeholderTextColor="#888" value={email} onChangeText={setEmail} />
+                    <TextInput style={styles.input} placeholder="İsim" placeholderTextColor="#888" value={firstName} onChangeText={setFirstName} />
+                    <TextInput style={styles.input} placeholder="Soyisim" placeholderTextColor="#888" value={lastName} onChangeText={setLastName} />
+                    <TextInput style={styles.input} placeholder="Kullanıcı Adı" placeholderTextColor="#888" value={username} onChangeText={setUsername} />
+                    <TextInput style={styles.input} placeholder="Şifre" placeholderTextColor="#888" secureTextEntry value={password} onChangeText={setPassword} />
+                    <TextInput style={styles.input} placeholder="Şifre Tekrar" placeholderTextColor="#888" secureTextEntry value={confirmPassword} onChangeText={setConfirmPassword} />
+                </View>
 
-            <View style={styles.checkboxContainer}>
-                <CheckBox
-                    isChecked={isTermsAccepted}
-                    onClick={() => setIsTermsAccepted(!isTermsAccepted)}
-                    rightText="Kullanıcı şartlarını kabul ediyorum"
-                    rightTextStyle={{ color: '#fff' }}
-                />
-                <CheckBox
-                    isChecked={isKVKKAccepted}
-                    onClick={() => setIsKVKKAccepted(!isKVKKAccepted)}
-                    rightText="KVKK Açık Rıza Metnini onaylıyorum"
-                    rightTextStyle={{ color: '#fff' }}
-                />
-                <CheckBox
-                    isChecked={isNewsletterSubscribed}
-                    onClick={() => setIsNewsletterSubscribed(!isNewsletterSubscribed)}
-                    rightText="Elektronik posta ve ileti almak istiyorum"
-                    rightTextStyle={{ color: '#fff' }}
-                />
-            </View>
+                <View style={styles.checkboxContainer}>
+                    <View style={styles.checkboxRow}>
+                        <CheckBox isChecked={isTermsAccepted} onClick={() => setIsTermsAccepted(!isTermsAccepted)} />
+                        <Text style={styles.checkboxText}>Kullanıcı şartlarını kabul ediyorum</Text>
+                    </View>
+                    <View style={styles.checkboxRow}>
+                        <CheckBox isChecked={isKVKKAccepted} onClick={() => setIsKVKKAccepted(!isKVKKAccepted)} />
+                        <Text style={styles.checkboxText}>KVKK Açık Rıza Metnini onaylıyorum</Text>
+                    </View>
+                    <View style={styles.checkboxRow}>
+                        <CheckBox isChecked={isNewsletterSubscribed} onClick={() => setIsNewsletterSubscribed(!isNewsletterSubscribed)} />
+                        <Text style={styles.checkboxText}>Elektronik posta ve ileti almak istiyorum</Text>
+                    </View>
+                </View>
 
-            <View style={styles.loginButton}>
-                <TouchableOpacity
-                    style={styles.imageButton}
-                    onPress={handlePress}>
+                <TouchableOpacity style={styles.registerButton} onPress={handlePress}>
                     <Image style={styles.image} source={require('../assets/register_button_design.png')} />
                 </TouchableOpacity>
-            </View>
+            </ScrollView>
         </ImageBackground>
     );
 }
@@ -122,12 +73,21 @@ function RegisterScreen() {
 const styles = StyleSheet.create({
     background: {
         flex: 1,
-        justifyContent: "flex-end",
+    },
+    scrollContainer: {
         alignItems: "center",
+        paddingVertical: 30,
+    },
+    logoContainer: {
+        marginBottom: 30,
+    },
+    logo: {
+        width: 300,
+        height: 180,
+        resizeMode: 'contain',
     },
     inputContainer: {
-        width: '100%',
-        paddingHorizontal: 20,
+        width: '90%',
         marginBottom: 20,
     },
     input: {
@@ -141,35 +101,29 @@ const styles = StyleSheet.create({
     checkboxContainer: {
         width: '90%',
         marginBottom: 20,
-        alignItems: 'flex-start',
     },
-    imageButton: {
-        width: "80%",
+    checkboxRow: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginBottom: 10,
+    },
+    checkboxText: {
+        marginLeft: 10,
+        color: '#fff',
+        fontSize: 16,
+    },
+    registerButton: {
+        width: '80%',
         height: 50,
-        justifyContent: "center",
-        alignItems: "center",
-    },
-    loginButton: {
-        width: '100%',
-        height: 70,
-        justifyContent: "center",
-        alignItems: "center",
-        marginVertical: 8,
-    },
-    logoContainer: {
-        position: "absolute",
-        top: 50,
-        alignItems: "center",
-    },
-    logo: {
-        width: 368,
-        height: 226,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginVertical: 20,
     },
     image: {
-        width: "100%",
-        height: "100%",
-        resizeMode: "contain",
+        width: '100%',
+        height: '100%',
+        resizeMode: 'contain',
     },
 });
-
+ 
 export default RegisterScreen;

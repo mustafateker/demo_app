@@ -9,8 +9,12 @@ import {
   Image,
 } from 'react-native';
 
-const SearchScreen = () => {
+const SearchScreen = ({ navigation }) => {
   const [searchText, setSearchText] = useState('');
+
+  const searchIconSrc = require('../assets/search_button_icon.png');
+  const backIconSrc = require('../assets/cross_icon.png');
+
   const data = [
     { id: '1', title: 'Item-1', description: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.' },
     { id: '2', title: 'Item-2', description: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.' },
@@ -18,9 +22,13 @@ const SearchScreen = () => {
     { id: '4', title: 'Item-4', description: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.' },
   ];
 
+  const filteredData = data.filter(item =>
+    `${item.title} ${item.description}`.toLowerCase().includes(searchText.toLowerCase())
+  );
+
   const renderItem = ({ item }) => (
     <View style={styles.itemContainer}>
-      <Image source={require('../assets/splash-icon.png')} style={styles.icon} />
+      <Image source={searchIconSrc} style={styles.itemIcon} />
       <View style={styles.textContainer}>
         <Text style={styles.itemTitle}>{item.title}</Text>
         <Text style={styles.itemDescription}>{item.description}</Text>
@@ -30,15 +38,13 @@ const SearchScreen = () => {
 
   return (
     <View style={styles.container}>
-      {/* Header */}
       <View style={styles.header}>
-        <TouchableOpacity>
-          <Image source={require('../assets/splash-icon.png')} style={styles.backIcon} />
+        <TouchableOpacity onPress={() => navigation.goBack()}>
+          <Image source={backIconSrc} style={styles.backIcon} />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>Ara</Text>
       </View>
 
-      {/* Search Bar */}
       <View style={styles.searchBar}>
         <TextInput
           style={styles.searchInput}
@@ -48,15 +54,19 @@ const SearchScreen = () => {
           onChangeText={setSearchText}
         />
         <TouchableOpacity>
-          <Image source={require('../assets/splash-icon.png')} style={styles.searchIcon} />
+          <Image source={searchIconSrc} style={styles.searchIcon} />
         </TouchableOpacity>
       </View>
 
-      {/* List */}
       <FlatList
-        data={data}
+        data={filteredData}
         keyExtractor={(item) => item.id}
         renderItem={renderItem}
+        ListEmptyComponent={
+          <View style={{ alignItems: 'center', marginTop: 20 }}>
+            <Text style={styles.noResults}>Sonuç bulunamadı</Text>
+          </View>
+        }
       />
     </View>
   );
@@ -67,12 +77,21 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#F5F5F5',
   },
-  header: {
+    header: {
+    backgroundColor: '#4CAF50',
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#88C057',
-    paddingHorizontal: 15,
-    paddingVertical: 10,
+    justifyContent: 'space-between',
+    paddingHorizontal: 20,
+    paddingVertical: 15,
+    paddingTop: 50, // Safe area için
+    borderBottomLeftRadius: 20,
+    borderBottomRightRadius: 20,
+  },
+  headerText: {
+    color: '#fff',
+    fontSize: 22,
+    fontWeight: 'bold',
   },
   backIcon: {
     width: 24,
@@ -80,10 +99,10 @@ const styles = StyleSheet.create({
     tintColor: '#fff',
   },
   headerTitle: {
-    fontSize: 18,
+    fontSize: 22,
     fontWeight: 'bold',
     color: '#fff',
-    marginLeft: 10,
+    marginLeft: 20,
   },
   searchBar: {
     flexDirection: 'row',
@@ -116,17 +135,17 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 2,
   },
-  icon: {
+  itemIcon: {
     width: 32,
     height: 32,
-    tintColor: '#88C057',
+    tintColor: '#6FAE45',
     marginRight: 10,
   },
   textContainer: {
     flex: 1,
   },
   itemTitle: {
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: 'bold',
     color: '#333',
   },
@@ -134,6 +153,12 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#666',
     marginTop: 4,
+  },
+  noResults: {
+    textAlign: 'center',
+    fontSize: 16,
+    color: '#666',
+    marginTop: 20,
   },
 });
 

@@ -6,12 +6,14 @@ const ProfileScreen = () => {
     <ScrollView style={styles.container}>
       {/* Profil Bilgileri ve Arkaplan */}
       <View style={styles.header}>
-        <Image
-          source={{ uri: 'https://cdn-icons-png.flaticon.com/512/3135/3135715.png' }} // Profil resmi
-          style={styles.profileImage}
-        />
-        <Text style={styles.name}>Ad Soyad</Text>
-        <Text style={styles.email}>info@example.com</Text>
+        <View style={styles.profileContainer}>
+          <Image
+            source={{ uri: 'https://cdn-icons-png.flaticon.com/512/3135/3135715.png' }}
+            style={styles.profileImage}
+          />
+          <Text style={styles.name}>Ad Soyad</Text>
+          <Text style={styles.email}>info@example.com</Text>
+        </View>
       </View>
 
       {/* Menü Listesi */}
@@ -32,7 +34,6 @@ const ProfileScreen = () => {
   );
 };
 
-// Menü Bileşeni
 const MenuItem = ({ icon, text }) => (
   <TouchableOpacity style={styles.menuItem}>
     <Text style={styles.icon}>{icon}</Text>
@@ -44,71 +45,78 @@ const MenuItem = ({ icon, text }) => (
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f5f5f5',
+    backgroundColor: '#F9F9F9',
   },
   header: {
     backgroundColor: '#4CAF50',
-    padding: 20,
+    paddingVertical: 50,
     alignItems: 'center',
-    borderBottomLeftRadius: 20,
-    borderBottomRightRadius: 20,
+    borderBottomLeftRadius: 25,
+    borderBottomRightRadius: 25,
+  },
+  profileContainer: {
+    marginTop: 20,
+    alignItems: 'center',
   },
   profileImage: {
-    width: 80,
-    height: 80,
-    borderRadius: 40,
-    backgroundColor: '#fff',
-    marginBottom: 10,
+    width: 100,
+    height: 100,
+    borderRadius: 50,
+    backgroundColor: '#FFF',
+    marginBottom: 15,
   },
   name: {
-    color: '#fff',
-    fontSize: 20,
+    color: '#FFF',
+    fontSize: 22,
     fontWeight: 'bold',
   },
   email: {
-    color: '#ddd',
+    color: '#DDE',
     fontSize: 14,
+    marginBottom: 10,
   },
   menu: {
     marginVertical: 20,
+    paddingHorizontal: 15,
   },
   menuItem: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#fff',
-    marginHorizontal: 20,
-    marginVertical: 5,
+    backgroundColor: '#FFF',
+    marginBottom: 10,
     padding: 15,
-    borderRadius: 10,
+    borderRadius: 12,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
-    shadowRadius: 4,
+    shadowRadius: 5,
     elevation: 3,
   },
   icon: {
     fontSize: 24,
-    marginRight: 10,
+    marginRight: 15,
+    color: '#2E7D32',
   },
   menuText: {
     flex: 1,
     fontSize: 16,
     fontWeight: '500',
+    color: '#333',
   },
   arrow: {
     fontSize: 16,
-    color: '#888',
+    color: '#999',
   },
   logoutButton: {
     marginHorizontal: 20,
-    backgroundColor: '#4CAF50',
+    backgroundColor: '#D32F2F',
     padding: 15,
-    borderRadius: 10,
+    borderRadius: 12,
     alignItems: 'center',
-    marginBottom: 20,
+    marginBottom: 30,
   },
   logoutText: {
-    color: '#fff',
+    color: '#FFF',
     fontSize: 16,
     fontWeight: 'bold',
   },

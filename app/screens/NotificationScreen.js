@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-const Bildiriler = () => {
+const Bildiriler = ({ navigation }) => {
   const notifications = [
     { title: 'Yeni kullanım koşulları', description: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.' },
     { title: 'Yeni eğitimlere göz at', description: 'Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s.' },
@@ -14,11 +14,11 @@ const Bildiriler = () => {
     <View style={styles.container}>
       {/* Header */}
       <View style={styles.header}>
-        <Icon name="bell" size={24} color="#fff" />
-        <Text style={styles.headerText}>Bildiriler</Text>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate('Welcome')}> 
           <Icon name="arrow-left" size={24} color="#fff" />
         </TouchableOpacity>
+        <Text style={styles.headerText}>Bildiriler</Text>
+        <Icon name="bell" size={24} color="#fff" />
       </View>
 
       {/* Bildirimler Listesi */}
@@ -40,19 +40,22 @@ const Bildiriler = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f4f4f4',
+    backgroundColor: '#F9FFF6',
   },
   header: {
     backgroundColor: '#4CAF50',
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    padding: 15,
-    paddingTop: 40, // Safe area için
+    paddingHorizontal: 20,
+    paddingVertical: 15,
+    paddingTop: 50, // Safe area için
+    borderBottomLeftRadius: 20,
+    borderBottomRightRadius: 20,
   },
   headerText: {
     color: '#fff',
-    fontSize: 20,
+    fontSize: 22,
     fontWeight: 'bold',
   },
   scrollView: {
@@ -64,12 +67,12 @@ const styles = StyleSheet.create({
     padding: 15,
     marginHorizontal: 15,
     marginBottom: 10,
-    borderRadius: 10,
-    elevation: 2,
+    borderRadius: 12,
+    elevation: 3,
     shadowColor: '#000',
     shadowOpacity: 0.1,
     shadowOffset: { width: 0, height: 2 },
-    shadowRadius: 4,
+    shadowRadius: 5,
   },
   cardIcon: {
     marginRight: 15,
@@ -79,13 +82,13 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   cardTitle: {
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: 'bold',
     color: '#333',
-    marginBottom: 15,
+    marginBottom: 8,
   },
   cardDescription: {
-    fontSize: 20,
+    fontSize: 16,
     color: '#666',
   },
 });
