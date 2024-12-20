@@ -66,7 +66,9 @@ const WelcomeScreen = ({ navigation }) => {
         </TouchableOpacity>
 
         {/* Siribot */}
-        <TouchableOpacity style={styles.hexagon}>
+        <TouchableOpacity style={styles.hexagon}
+         onPress={() => navigation.navigate('Siribot')} >
+        
           <Image source={require('../assets/siribot_button_design.png')} style={styles.hexImage} />
           <Text style={styles.itemText}>Siribot</Text>
         </TouchableOpacity>
