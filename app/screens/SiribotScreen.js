@@ -7,27 +7,54 @@ import {
   FlatList,
   TouchableOpacity,
   Image,
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView, // ScrollView ekliyoruz
 } from 'react-native';
 
 const SiriBotScreen = () => {
   const [inputText, setInputText] = useState('');
+  const [chatHistory, setChatHistory] = useState([]); // Soru ve cevapları tutmak için dizi
+  const [showQuestions, setShowQuestions] = useState(false); // Soruların görünürlüğü
 
   const quickQuestions = [
     'Dikey tarım nedir?',
     'Sistemi nasıl kurabilirim?',
     'Hangi ürünleri yetiştirebilirim?',
-    'Hangi gübre ve mineralleri kullanabilirim?'
+    'Hangi gübre ve mineralleri kullanabilirim?',
   ];
 
-  const renderQuestion = ({ item }) => (
-    <TouchableOpacity style={styles.questionItem}>
-      <Image source={require('../assets/siribot_tasarım.png')} style={styles.questionIcon} />
-      <Text style={styles.questionText}>{item}</Text>
-    </TouchableOpacity>
-  );
+  const answerMap = {
+    'Dikey tarım nedir?': 'Dikey tarım, bitkilerin dikey olarak yetiştirilmesi yöntemidir.',
+    'Sistemi nasıl kurabilirim?': 'Dikey tarım sistemi kurmak için uygun malzemeler ve planlama gereklidir.',
+    'Hangi ürünleri yetiştirebilirim?': 'Lahanadan, marula kadar pek çok ürün yetiştirebilirsiniz.',
+    'Hangi gübre ve mineralleri kullanabilirim?': 'Organik gübre ve özel mineraller kullanabilirsiniz.',
+  };
+
+  const renderChatBubble = ({ item }) => {
+    return (
+      <View style={item.type === 'question' ? styles.questionBubble : styles.answerBubble}>
+        <Text style={item.type === 'question' ? styles.questionText : styles.answerText}>
+          {item.text}
+        </Text>
+      </View>
+    );
+  };
+
+  const handleQuestionPress = (question) => {
+    const answer = answerMap[question];
+    if (answer) {
+      setChatHistory(prevHistory => [
+        ...prevHistory,
+        { type: 'question', text: question },
+        { type: 'answer', text: answer },
+      ]);
+      setShowQuestions(false); // Soruları gizle
+    }
+  };
 
   return (
-    <View style={styles.container}>
+    <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
       {/* Header */}
       <View style={styles.header}>
         <View style={styles.headerContent}>
@@ -39,38 +66,55 @@ const SiriBotScreen = () => {
         </TouchableOpacity>
       </View>
 
-      {/* Quick Questions */}
-      <FlatList
-        data={quickQuestions}
-        keyExtractor={(item, index) => index.toString()}
-        renderItem={renderQuestion}
-        contentContainerStyle={styles.questionsList}
-      />
+      {/* Answer and Question Bubbles */}
+      <ScrollView contentContainerStyle={styles.answerContainer}>
+        <FlatList
+          data={chatHistory}
+          keyExtractor={(item, index) => index.toString()}
+          renderItem={renderChatBubble}
+          scrollEnabled={false} // FlatList'in kaydırılmasını devre dışı bırakıyoruz
+        />
+      </ScrollView>
 
       {/* Input Area */}
-      <View style={styles.inputArea}>
+      <TouchableOpacity style={styles.inputArea} onPress={() => setShowQuestions(!showQuestions)}>
         <TextInput
           style={styles.input}
           placeholder="Bana sormak istediğin bir şey var mı?"
           placeholderTextColor="#888"
           value={inputText}
           onChangeText={setInputText}
+          editable={false} // Kullanıcıdan metin girişi alınmasın
         />
-        <TouchableOpacity style={styles.sendButton}>
-          <Image source={require('../assets/siribot_tasarım.png')} style={styles.sendIcon} />
-        </TouchableOpacity>
-      </View>
-    </View>
+      </TouchableOpacity>
+
+      {/* Quick Questions (Hidden initially) */}
+      {showQuestions && (
+        <FlatList
+          data={quickQuestions}
+          keyExtractor={(item, index) => index.toString()}
+          renderItem={({ item }) => (
+            <TouchableOpacity
+              style={styles.questionItem}
+              onPress={() => handleQuestionPress(item)}
+            >
+              <Text style={styles.questionText}>{item}</Text>
+            </TouchableOpacity>
+          )}
+          contentContainerStyle={styles.questionsList}
+        />
+      )}
+    </KeyboardAvoidingView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F5F5F5',
+    backgroundColor: '#008650', // Sayfanın arka plan rengi
   },
   header: {
-    backgroundColor: '#6FAE45',
+    backgroundColor: '#6fce55', // Header arka plan rengi
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
@@ -79,6 +123,10 @@ const styles = StyleSheet.create({
     paddingTop: 50,
     borderBottomLeftRadius: 20,
     borderBottomRightRadius: 20,
+    shadowColor: '#000',
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+    elevation: 5,
   },
   headerContent: {
     flexDirection: 'row',
@@ -90,7 +138,7 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   headerTitle: {
-    fontSize: 22,
+    fontSize: 24,
     fontWeight: 'bold',
     color: '#fff',
   },
@@ -99,26 +147,42 @@ const styles = StyleSheet.create({
     height: 24,
     tintColor: '#fff',
   },
-  questionsList: {
-    padding: 15,
+  answerContainer: {
+    paddingHorizontal: 15,
+    paddingTop: 10,
+    flexGrow: 1, // Esnek büyüme
   },
-  questionItem: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: '#E8F5E9',
+  answerBubble: {
+    backgroundColor: '#fff',
     padding: 15,
-    borderRadius: 10,
-    marginBottom: 10,
+    borderRadius: 20,
+    marginVertical: 5,
+    alignSelf: 'flex-start',
+    maxWidth: '80%',
+    shadowColor: '#000',
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+    elevation: 5,
   },
-  questionIcon: {
-    width: 20,
-    height: 20,
-    tintColor: '#6FAE45',
-    marginRight: 10,
+  questionBubble: {
+    backgroundColor: '#6fce55',
+    padding: 15,
+    borderRadius: 20,
+    marginVertical: 5,
+    alignSelf: 'flex-end',
+    maxWidth: '80%',
+    shadowColor: '#000',
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  answerText: {
+    fontSize: 16,
+    color: '#333',
   },
   questionText: {
     fontSize: 16,
-    color: '#333',
+    color: '#fff', // Soru metni beyaz
   },
   inputArea: {
     flexDirection: 'row',
@@ -141,16 +205,14 @@ const styles = StyleSheet.create({
     backgroundColor: '#F5F5F5',
     borderRadius: 20,
   },
-  sendButton: {
-    marginLeft: 10,
-    backgroundColor: '#6FAE45',
-    padding: 10,
-    borderRadius: 50,
+  questionsList: {
+    padding: 15,
   },
-  sendIcon: {
-    width: 20,
-    height: 20,
-    tintColor: '#fff',
+  questionItem: {
+    backgroundColor: '#6fce55', // Soru arka plan rengi
+    padding: 15,
+    borderRadius: 15,
+    marginBottom: 15,
   },
 });
 
