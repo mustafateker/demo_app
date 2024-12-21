@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { ImageBackground, Image, View, StyleSheet, TouchableOpacity, TextInput, Text, Alert, ScrollView } from 'react-native';
 import CheckBox from 'react-native-check-box';
@@ -27,11 +28,6 @@ function RegisterScreen() {
             return;
         }
 
-        if (!isKVKKAccepted) {
-            Alert.alert("Hata", "KVKK Açık Rıza Metnini onaylamalısınız!");
-            return;
-        }
-
         Alert.alert("Başarılı", "Kayıt başarılı!");
         navigation.navigate('Welcome');
     };
@@ -44,12 +40,52 @@ function RegisterScreen() {
                 </View>
 
                 <View style={styles.inputContainer}>
-                    <TextInput style={styles.input} placeholder="Mail adresiniz" placeholderTextColor="#888" value={email} onChangeText={setEmail} />
-                    <TextInput style={styles.input} placeholder="İsim" placeholderTextColor="#888" value={firstName} onChangeText={setFirstName} />
-                    <TextInput style={styles.input} placeholder="Soyisim" placeholderTextColor="#888" value={lastName} onChangeText={setLastName} />
-                    <TextInput style={styles.input} placeholder="Kullanıcı Adı" placeholderTextColor="#888" value={username} onChangeText={setUsername} />
-                    <TextInput style={styles.input} placeholder="Şifre" placeholderTextColor="#888" secureTextEntry value={password} onChangeText={setPassword} />
-                    <TextInput style={styles.input} placeholder="Şifre Tekrar" placeholderTextColor="#888" secureTextEntry value={confirmPassword} onChangeText={setConfirmPassword} />
+                    <TextInput 
+                        style={styles.input} 
+                        placeholder="Mail adresiniz" 
+                        placeholderTextColor="#888" 
+                        value={email} 
+                        onChangeText={setEmail} 
+                    />
+                    <View style={styles.inputRow}>
+                        <TextInput 
+                            style={[styles.inputRowText, { flex: 1, marginRight: 5 }]} 
+                            placeholder="İsim" 
+                            placeholderTextColor="#888" 
+                            value={firstName}
+                            onChangeText={setFirstName}
+                        />
+                        <TextInput 
+                            style={[styles.inputRowText, { flex: 1, marginLeft: 5 }]} 
+                            placeholder="Soyisim" 
+                            placeholderTextColor="#888" 
+                            value={lastName} 
+                            onChangeText={setLastName} 
+                        />
+                    </View>
+                    <TextInput 
+                        style={styles.input} 
+                        placeholder="Kullanıcı Adı" 
+                        placeholderTextColor="#888" 
+                        value={username} 
+                        onChangeText={setUsername} 
+                    />
+                    <TextInput 
+                        style={styles.input} 
+                        placeholder="Şifre" 
+                        placeholderTextColor="#888" 
+                        secureTextEntry 
+                        value={password} 
+                        onChangeText={setPassword} 
+                    />
+                    <TextInput 
+                        style={styles.input} 
+                        placeholder="Şifre Tekrar" 
+                        placeholderTextColor="#888" 
+                        secureTextEntry 
+                        value={confirmPassword} 
+                        onChangeText={setConfirmPassword} 
+                    />
                 </View>
 
                 <View style={styles.checkboxContainer}>
@@ -84,7 +120,8 @@ const styles = StyleSheet.create({
         paddingVertical: 30,
     },
     logoContainer: {
-        marginBottom: 30,
+        marginVertical: 60,
+        marginBottom: 10,
     },
     logo: {
         width: 300,
@@ -93,9 +130,10 @@ const styles = StyleSheet.create({
     },
     inputContainer: {
         width: '90%',
-        marginBottom: 20,
+        marginBottom: 5,
     },
     input: {
+        width: '100%',
         backgroundColor: '#fff',
         height: 50,
         borderRadius: 8,
@@ -103,9 +141,27 @@ const styles = StyleSheet.create({
         marginBottom: 15,
         fontSize: 16,
     },
+    inputRowText :{
+        width: '50%',
+        backgroundColor: '#fff',
+        height: 50,
+        borderRadius: 8,
+        paddingHorizontal: 15,
+        marginBottom: 15,
+        fontSize: 16,
+    },
+    inputRow: {
+        flex : 1,
+        width: '100%',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        
+        
+    },
+        
     checkboxContainer: {
         width: '90%',
-        marginBottom: 20,
+        marginBottom: 2,
     },
     checkboxRow: {
         flexDirection: 'row',
@@ -122,7 +178,7 @@ const styles = StyleSheet.create({
         height: 50,
         justifyContent: 'center',
         alignItems: 'center',
-        marginVertical: 20,
+        marginVertical: 5,
     },
     image: {
         width: '100%',

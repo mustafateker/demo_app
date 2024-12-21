@@ -1,15 +1,46 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView, ImageBackground } from 'react-native';
 
 const WelcomeScreen = ({ navigation }) => {
   return (
     <ScrollView style={styles.container}>
       {/* Üst Logo Alanı */}
-      <View style={styles.header}>
-        <Image source={require('../assets/sirius_farm_organic_tarim_text.png')} style={styles.logo} />
-        <Text style={styles.title}>SIRIUS</Text>
-        <Text style={styles.subtitle}>Dikey Tarım</Text>
-      </View>
+      <ImageBackground 
+        source={require('../assets/head_bar_main_menu.png')}
+        style={styles.header}
+      >
+        <View 
+              style={{
+                flex : 1,
+                width: '95%',
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                marginRight: 22,}}>
+        <TouchableOpacity 
+          style={styles.icons}
+          onPress={() => navigation.navigate('Tasks')} 
+          >
+          <Image 
+            source={require('../assets/menu_icon_design.png')} 
+            style={{ height: 30, resizeMode: 'contain' }} 
+          />
+        </TouchableOpacity>
+        <TouchableOpacity 
+          style={styles.icons}
+          onPress={() => navigation.navigate('Tasks')} 
+          >
+          <Image 
+            source={require('../assets/search_button_icon_design.png')} 
+            style={{ height: 30, resizeMode: 'contain' }} 
+          />
+        </TouchableOpacity>
+        </View>
+        
+        <Image 
+          source={require('../assets/sirius_farm_organic_tarim_text.png')} 
+          style={styles.logo} 
+        />
+      </ImageBackground>
 
       {/* Grid Alanı */}
       <View style={styles.grid}>
@@ -88,17 +119,23 @@ const styles = StyleSheet.create({
     backgroundColor: '#F9FFF6',
   },
   header: {
+    flex: 1,
+    width: '100%',
+    height: 250,
     alignItems: 'center',
     justifyContent: 'center',
     paddingVertical: 20,
-    backgroundColor: '#4CAF50',
-    borderBottomLeftRadius: 50,
-    borderBottomRightRadius: 50,
   },
   logo: {
-    width: 80,
-    height: 80,
-    marginBottom: 10,
+    width: '50%',
+    height: 150,
+    marginBottom: 20,
+  },
+  icons : {
+    width: '10%',
+    height: '10%',
+    marginLeft: 3,
+    marginTop: 30,
   },
   title: {
     fontSize: 36,
