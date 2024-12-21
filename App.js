@@ -5,18 +5,20 @@ import { createStackNavigator } from '@react-navigation/stack';
 import WelcomeScreen from './app/screens/WelcomeScreen';
 import LoginScreen from './app/screens/LoginScreen';
 import RegisterScreen from './app/screens/RegisterScreen';
-import ProfileScreen from './app/screens/ProfileScreen'; 
+import ProfileScreen from './app/screens/ProfileScreen';
 import NotificationScreen from './app/screens/NotificationScreen';
 import SearchScreen from './app/screens/SearchScreen';
 import TasksScreen from './app/screens/TasksScreen';
 import SiribotScreen from './app/screens/SiribotScreen';
 import ForgetPasswordScreen from './app/screens/ForgetPasswordScreen';
-import ConcatScreen  from './app/screens/ConcatScreen';
+import ConcatScreen from './app/screens/ConcatScreen';
 import PersonalScreen from './app/screens/PersonalScreen';
 import ChangePasswordScreen from './app/screens/ChangePasswordScreen';
 import SecurityScreen from './app/screens/SecurityScreen';
 import AccountManagementScreen from './app/screens/AccountManagementScreen';
 import EducationScreen from './app/screens/EducationScreen';
+import DailyInfoScreen from './app/screens/DailyInfoScreen';
+import RequestScreen from './app/screens/RequestScreen';
 
 const Stack = createStackNavigator();
 
@@ -25,90 +27,100 @@ export default function App() {
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Login">
         {/* WelcomeScreen */}
-        <Stack.Screen 
-          name="Welcome" 
-          component={WelcomeScreen} 
-          options={{ headerShown: false, title: 'WelcomeScreen' }} 
+        <Stack.Screen
+          name="Welcome"
+          component={WelcomeScreen}
+          options={{ headerShown: false, title: 'WelcomeScreen' }}
         />
 
         {/* LoginScreen */}
-        <Stack.Screen 
-          name="Login" 
-          component={LoginScreen} 
-          options={{ headerShown: false, title: 'LoginScreen' }} 
+        <Stack.Screen
+          name="Login"
+          component={LoginScreen}
+          options={{ headerShown: false, title: 'LoginScreen' }}
         />
 
         {/* RegisterScreen */}
-        <Stack.Screen 
-          name="Register" 
-          component={RegisterScreen} 
-          options={{ headerShown: false, title: 'Register' }} 
+        <Stack.Screen
+          name="Register"
+          component={RegisterScreen}
+          options={{ headerShown: false, title: 'Register' }}
         />
 
         {/* ProfileScreen */}
-        <Stack.Screen 
-          name="Profile" 
-          component={ProfileScreen} 
-          options={{ headerShown: false, title: 'Profile' }} 
+        <Stack.Screen
+          name="Profile"
+          component={ProfileScreen}
+          options={{ headerShown: false, title: 'Profile' }}
         />
 
-      <Stack.Screen
+        <Stack.Screen
           name="Notifications"
           component={NotificationScreen}
-          options={{ headerShown: false ,title: 'Bildirimler' }}
+          options={{ headerShown: false, title: 'Bildirimler' }}
         />
         <Stack.Screen
           name="Search"
           component={SearchScreen}
-          options={{ headerShown: false ,title: 'Uygulama İçinde Ara' }}
+          options={{ headerShown: false, title: 'Uygulama İçinde Ara' }}
         />
         <Stack.Screen
           name="Tasks"
           component={TasksScreen}
-          options={{ headerShown: false ,title: 'Görevlerim' }}
+          options={{ headerShown: false, title: 'Görevlerim' }}
         />
         <Stack.Screen
           name="Siribot"
           component={SiribotScreen}
-          options={{ headerShown: false ,title: 'Siribot Ekranım' }}
+          options={{ headerShown: false, title: 'Siribot Ekranım' }}
         />
         <Stack.Screen
           name="Password"
           component={ForgetPasswordScreen}
-          options={{ headerShown: false ,title: 'Parolamı Unuttum' }}
+          options={{ headerShown: false, title: 'Parolamı Unuttum' }}
         />
         <Stack.Screen
           name="Concat"
           component={ConcatScreen}
-          options={{ headerShown: false ,title: 'İletişim Bilgileri' }}
+          options={{ headerShown: false, title: 'İletişim Bilgileri' }}
         />
-          <Stack.Screen
+        <Stack.Screen
           name="Personal"
           component={PersonalScreen}
-          options={{ headerShown: false ,title: 'Kişisel Bilgiler' }}
+          options={{ headerShown: false, title: 'Kişisel Bilgiler' }}
         />
-          <Stack.Screen
+        <Stack.Screen
           name="ChangePassword"
           component={ChangePasswordScreen}
-          options={{ headerShown: false ,title: 'Parola Değiştir' }}
+          options={{ headerShown: false, title: 'Parola Değiştir' }}
         />
-        
-          <Stack.Screen
+
+        <Stack.Screen
           name="Security"
           component={SecurityScreen}
-          options={{ headerShown: false ,title: 'Güvenlik' }}
+          options={{ headerShown: false, title: 'Güvenlik' }}
         />
-        
+
         <Stack.Screen
           name="AccountManagement"
           component={AccountManagementScreen}
-          options={{ headerShown: false ,title: 'Hesapaları Yönet' }}
+          options={{ headerShown: false, title: 'Hesapaları Yönet' }}
         />
-                
+
         <Stack.Screen
           name="Education"
           component={EducationScreen}
-          options={{ headerShown: false ,title: 'Eğitimlerim' }}
+          options={{ headerShown: false, title: 'Eğitimlerim' }}
+        />
+        <Stack.Screen
+          name="Daily"
+          component={DailyInfoScreen}
+          options={{ headerShown: false, title: 'Günlük Bilgiler' }}
+        />
+        <Stack.Screen
+          name="Request"
+          component={RequestScreen}
+          options={{ headerShown: false, title: 'Taleplerim' }}
         />
       </Stack.Navigator>
     </NavigationContainer>

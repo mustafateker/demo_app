@@ -14,16 +14,18 @@ const WelcomeScreen = ({ navigation }) => {
       {/* Grid Alanı */}
       <View style={styles.grid}>
         {/* Günlük Bilgi */}
-        <TouchableOpacity style={styles.hexagon}>
+        <TouchableOpacity style={styles.hexagon}
+          onPress={() => navigation.navigate('Daily')}
+        >
           <Image source={require('../assets/daily_information_main_menu_button.png')} style={styles.hexImage} />
           <Text style={styles.itemText}>Günlük Bilgi</Text>
         </TouchableOpacity>
 
         {/* Görevlerim */}
-        <TouchableOpacity 
+        <TouchableOpacity
           style={styles.hexagon}
-          onPress={() => navigation.navigate('Tasks')} 
-          >
+          onPress={() => navigation.navigate('Tasks')}
+        >
           <Image source={require('../assets/tasks_main_menu_button.png')} style={styles.hexImage} />
           <Text style={styles.itemText}>Görevler</Text>
         </TouchableOpacity>
@@ -48,13 +50,15 @@ const WelcomeScreen = ({ navigation }) => {
 
         {/* Eğitimler */}
         <TouchableOpacity style={styles.hexagon}
-        onPress={() => navigation.navigate('Education')} >
+          onPress={() => navigation.navigate('Education')} >
           <Image source={require('../assets/education_main_menu_button.png')} style={styles.hexImage} />
           <Text style={styles.itemText}>Eğitimler</Text>
         </TouchableOpacity>
 
         {/* Taleplerim */}
-        <TouchableOpacity style={styles.hexagon}>
+        <TouchableOpacity style={styles.hexagon}
+          onPress={() => navigation.navigate('Request')}
+        >
           <Image source={require('../assets/request_button_icon.png')} style={styles.hexImage} />
           <Text style={styles.itemText}>Taleplerim</Text>
         </TouchableOpacity>
@@ -68,8 +72,8 @@ const WelcomeScreen = ({ navigation }) => {
 
         {/* Siribot */}
         <TouchableOpacity style={styles.hexagon}
-         onPress={() => navigation.navigate('Siribot')} >
-        
+          onPress={() => navigation.navigate('Siribot')} >
+
           <Image source={require('../assets/siribot_button_design.png')} style={styles.hexImage} />
           <Text style={styles.itemText}>Siribot</Text>
         </TouchableOpacity>
