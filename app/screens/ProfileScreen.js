@@ -1,7 +1,11 @@
 import React from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView } from 'react-native';
 
-const ProfileScreen = () => {
+const ProfileScreen = ({ navigation }) => {
+  const handleNavigate = (screen) => {
+    navigation.navigate(screen);
+  };
+
   return (
     <ScrollView style={styles.container}>
       {/* Profil Bilgileri ve Arkaplan */}
@@ -18,24 +22,24 @@ const ProfileScreen = () => {
 
       {/* Menü Listesi */}
       <View style={styles.menu}>
-        <MenuItem icon="👤" text="Kişisel Bilgiler" />
-        <MenuItem icon="🛡️" text="Güvenlik" />
-        <MenuItem icon="🔒" text="Parola Değiştir" />
-        <MenuItem icon="🔔" text="Bildirimler ve İzinler" />
-        <MenuItem icon="📞" text="İletişim Bilgileri" />
-        <MenuItem icon="⚙️" text="Hesapları Yönet" />
+        <MenuItem icon="👤" text="Kişisel Bilgiler" onPress={() => handleNavigate('Personal')} />
+        <MenuItem icon="🛡️" text="Güvenlik" onPress={() => handleNavigate('Security')} /> 
+        <MenuItem icon="🔒" text="Parola Değiştir" onPress={() => handleNavigate('ChangePassword')} />
+        <MenuItem icon="🔔" text="Bildirimler ve İzinler" onPress={() => handleNavigate('Notifications')} />
+        <MenuItem icon="📞" text="İletişim Bilgileri" onPress={() => handleNavigate('Concat')} />
+       <MenuItem icon="⚙️" text="Hesapları Yönet" onPress={() => handleNavigate('AccountManagement')} />
       </View>
 
       {/* Çıkış Butonu */}
-      <TouchableOpacity style={styles.logoutButton}>
+      <TouchableOpacity style={styles.logoutButton} onPress={() => handleNavigate('LoginScreen')}>
         <Text style={styles.logoutText}>⏻ Çıkış Yap</Text>
       </TouchableOpacity>
     </ScrollView>
   );
 };
 
-const MenuItem = ({ icon, text }) => (
-  <TouchableOpacity style={styles.menuItem}>
+const MenuItem = ({ icon, text, onPress }) => (
+  <TouchableOpacity style={styles.menuItem} onPress={onPress}>
     <Text style={styles.icon}>{icon}</Text>
     <Text style={styles.menuText}>{text}</Text>
     <Text style={styles.arrow}>▶</Text>
