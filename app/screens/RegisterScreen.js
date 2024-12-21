@@ -27,6 +27,11 @@ function RegisterScreen() {
             return;
         }
 
+        if (!isKVKKAccepted) {
+            Alert.alert("Hata", "KVKK Açık Rıza Metnini onaylamalısınız!");
+            return;
+        }
+
         Alert.alert("Başarılı", "Kayıt başarılı!");
         navigation.navigate('Welcome');
     };

@@ -11,7 +11,11 @@ import SearchScreen from './app/screens/SearchScreen';
 import TasksScreen from './app/screens/TasksScreen';
 import SiribotScreen from './app/screens/SiribotScreen';
 import ForgetPasswordScreen from './app/screens/ForgetPasswordScreen';
-
+import ConcatScreen  from './app/screens/ConcatScreen';
+import PersonalScreen from './app/screens/PersonalScreen';
+import ChangePasswordScreen from './app/screens/ChangePasswordScreen';
+import SecurityScreen from './app/screens/SecurityScreen';
+import AccountManagementScreen from './app/screens/AccountManagementScreen';
 
 const Stack = createStackNavigator();
 
@@ -72,7 +76,33 @@ export default function App() {
           component={ForgetPasswordScreen}
           options={{ headerShown: false ,title: 'Parolamı Unuttum' }}
         />
+        <Stack.Screen
+          name="Concat"
+          component={ConcatScreen}
+          options={{ headerShown: false ,title: 'İletişim Bilgileri' }}
+        />
+          <Stack.Screen
+          name="Personal"
+          component={PersonalScreen}
+          options={{ headerShown: false ,title: 'Kişisel Bilgiler' }}
+        />
+          <Stack.Screen
+          name="ChangePassword"
+          component={ChangePasswordScreen}
+          options={{ headerShown: false ,title: 'Parola Değiştir' }}
+        />
         
+          <Stack.Screen
+          name="Security"
+          component={SecurityScreen}
+          options={{ headerShown: false ,title: 'Güvenlik' }}
+        />
+        
+        <Stack.Screen
+          name="AccountManagement"
+          component={AccountManagementScreen}
+          options={{ headerShown: false ,title: 'Hesapaları Yönet' }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
