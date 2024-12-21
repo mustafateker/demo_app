@@ -48,7 +48,7 @@ const WelcomeScreen = ({ navigation }) => {
 
         {/* Eğitimler */}
         <TouchableOpacity style={styles.hexagon}
-        onPress={() => navigation.navigate('Education')} >>
+        onPress={() => navigation.navigate('Education')} >
           <Image source={require('../assets/education_main_menu_button.png')} style={styles.hexImage} />
           <Text style={styles.itemText}>Eğitimler</Text>
         </TouchableOpacity>

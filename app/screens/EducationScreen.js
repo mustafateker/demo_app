@@ -49,7 +49,7 @@ const EducationScreen = () => {
   ];
 
   const handleCourseClick = (courseTitle) => {
-    console.log(`${courseTitle} tıklandı!`);
+    
   };
 
   return (
@@ -70,7 +70,7 @@ const EducationScreen = () => {
                 <Image source={course.icon} style={styles.icon} />
                 <Text style={styles.cardTitle}>{course.title}</Text>
               </View>
-              <Progress.Bar progress={course.progress} width={null} color="#fff" style={styles.progressBar} />
+              <Progress.Bar progress={course.progress} width={200} color="#fff" style={styles.progressBar} />
               <View style={styles.cardFooter}>
                 <Text style={styles.continueText}>Eğitime devam et...</Text>
                 <Text style={styles.percentageText}>{`${Math.round(course.progress * 100)}% Tamamlandı`}</Text>
