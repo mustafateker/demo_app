@@ -49,7 +49,7 @@ const WelcomeScreen = ({ navigation }) => {
         <View style={styles.hexRow}>
           <TouchableOpacity 
             style={styles.hexagonSmall} 
-            onPress={() => navigation.navigate('DailyInfo')}
+            onPress={() => navigation.navigate('Daily')}
           >
             <Image source={require('../assets/daily_information_main_menu_button.png')} style={styles.hexImage} />
           </TouchableOpacity>
@@ -97,7 +97,7 @@ const WelcomeScreen = ({ navigation }) => {
           </TouchableOpacity>
           <TouchableOpacity 
             style={[styles.hexagonLarge, styles.veryCloseSpacing]} 
-            onPress={() => navigation.navigate('DailyInfo')}
+            onPress={() => navigation.navigate('SiriusNedir')}
           >
             <Image source={require('../assets/sirius_nedir_button_design.png')} style={styles.hexImage} />
           </TouchableOpacity>

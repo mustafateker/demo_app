@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet, ScrollView, Image, TouchableOpacity } from 'react-native';
 import * as Progress from 'react-native-progress';
 
-const EducationScreen = () => {
+const EducationScreen = ({ navigation }) => {
   const ongoingCourses = [
     {
       id: 1,
@@ -48,8 +48,13 @@ const EducationScreen = () => {
     },
   ];
 
+  const handleOngoingCourseClick = (course) => {
+    // Detay ekranına yönlendirme
+    navigation.navigate('EducationDetail', { course });
+  };
+
   const handleCourseClick = (courseTitle) => {
-    
+    console.log(`Clicked course: ${courseTitle}`);
   };
 
   return (
@@ -62,10 +67,14 @@ const EducationScreen = () => {
       {/* Devam Eden Eğitimler */}
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Devam Eden Eğitimler</Text>
-        <Text style={styles.subTitle}>3 Devam eden eğitim</Text>
+        <Text style={styles.subTitle}>{`${ongoingCourses.length} Devam eden eğitim`}</Text>
         <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.horizontalScroll}>
           {ongoingCourses.map((course) => (
-            <View key={course.id} style={styles.card}>
+            <TouchableOpacity
+              key={course.id}
+              style={styles.card}
+              onPress={() => handleOngoingCourseClick(course)}
+            >
               <View style={styles.cardHeader}>
                 <Image source={course.icon} style={styles.icon} />
                 <Text style={styles.cardTitle}>{course.title}</Text>
@@ -76,7 +85,7 @@ const EducationScreen = () => {
                 <Text style={styles.percentageText}>{`${Math.round(course.progress * 100)}% Tamamlandı`}</Text>
               </View>
               <Text style={styles.detailsText}>{course.details}</Text>
-            </View>
+            </TouchableOpacity>
           ))}
         </ScrollView>
       </View>
