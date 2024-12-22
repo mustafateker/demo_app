@@ -19,6 +19,9 @@ import AccountManagementScreen from './app/screens/AccountManagementScreen';
 import EducationScreen from './app/screens/EducationScreen';
 import DailyInfoScreen from './app/screens/DailyInfoScreen';
 import RequestScreen from './app/screens/RequestScreen';
+import EducationDetail from './app/screens/EducationDetail';
+import SiriusNedir from './app/screens/SiriusNedir';
+
 
 const Stack = createStackNavigator();
 
@@ -122,6 +125,17 @@ export default function App() {
           component={RequestScreen}
           options={{ headerShown: false, title: 'Taleplerim' }}
         />
+        <Stack.Screen
+          name="EducationDetail"
+          component={EducationDetail}
+          options={{ headerShown: false, title: 'Eğitim Detayları' }}
+        />
+        <Stack.Screen
+          name="SiriusNedir"
+          component={SiriusNedir}
+          options={{ headerShown: false, title: 'Sirius Nedir' }}
+        />
+
       </Stack.Navigator>
     </NavigationContainer>
   );
