@@ -8,6 +8,7 @@ import {
     FlatList,
     Modal,
     Dimensions,
+    Image,
 } from 'react-native';
 
 const RequestScreen = () => {
@@ -15,6 +16,7 @@ const RequestScreen = () => {
     const [newQuestion, setNewQuestion] = useState('');
     const [selectedQuestion, setSelectedQuestion] = useState(null);
     const [modalVisible, setModalVisible] = useState(false);
+    const [answer, setAnswer] = useState('');  // Store the answer in a separate state
 
     const addQuestion = () => {
         if (newQuestion.trim() !== '') {
@@ -26,6 +28,7 @@ const RequestScreen = () => {
 
     const openModal = (question) => {
         setSelectedQuestion(question);
+        setAnswer(question.answer || '');  // Pre-fill the answer if exists
         setModalVisible(true);
     };
 
@@ -34,7 +37,8 @@ const RequestScreen = () => {
         setModalVisible(false);
     };
 
-    const submitAnswer = (answer) => {
+    const submitAnswer = () => {
+        // Update the question with the new answer
         setQuestions(
             questions.map((q) =>
                 q.id === selectedQuestion.id ? { ...q, answer } : q
@@ -45,12 +49,16 @@ const RequestScreen = () => {
 
     return (
         <View style={styles.container}>
-            {/* Header */}
+            {/* Header with PNG Image and Texts */}
             <View style={styles.header}>
-                <Text style={styles.title}>Taleplerim</Text>
-                <Text style={styles.subtitle}>
-                    Dikey tarım hakkında sorularınızı yazın, biz cevaplayalım!
-                </Text>
+                <Image
+                    source={require('../assets/app_head_bar.png')}
+                    style={styles.headerImage}
+                    resizeMode="cover"
+                />
+                <View style={styles.headerTextContainer}>
+                    <Text style={styles.title}>Taleplerim</Text>
+                </View>
             </View>
 
             {/* Add Question Section */}
@@ -97,12 +105,13 @@ const RequestScreen = () => {
                             <Text style={styles.modalQuestion}>
                                 Soru: {selectedQuestion.text}
                             </Text>
+                            {/* Display the answer in a separate box */}
                             <TextInput
                                 style={styles.modalInput}
                                 placeholder="Cevabınızı buraya yazın..."
-                                onSubmitEditing={(e) =>
-                                    submitAnswer(e.nativeEvent.text)
-                                }
+                                value={answer}
+                                onChangeText={setAnswer} // Update the answer state
+                                onSubmitEditing={submitAnswer}  // Submit answer when user presses "Enter"
                             />
                             <TouchableOpacity
                                 style={styles.closeButton}
@@ -121,13 +130,25 @@ const RequestScreen = () => {
 const styles = StyleSheet.create({
     container: { flex: 1, backgroundColor: '#F5F5F5' },
     header: {
-        padding: 20,
-        paddingTop: Dimensions.get('screen').height * 0.05,
-        backgroundColor: '#4CAF50',
+        height: Dimensions.get('screen').height * 0.10, // Header yüksekliği
+        position: 'relative',
+    },
+    headerImage: {
+        width: '100%',
+        height: '100%',
+        position: 'absolute',
+    },
+    headerTextContainer: {
+        flex: 1,
+        justifyContent: 'center',
         alignItems: 'center',
     },
-    title: { fontSize: 24, color: '#FFF', fontWeight: 'bold' },
-    subtitle: { fontSize: 16, color: '#E8F5E9', marginTop: 5, textAlign: 'center' },
+    title: {
+        fontSize: 30,
+        fontWeight: 'bold',
+        color: '#FFF',
+        textAlign: 'center',
+    },
     inputContainer: {
         flexDirection: 'row',
         padding: 10,

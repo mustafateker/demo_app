@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import * as Progress from 'react-native-progress';
 
 const EducationDetail = ({ route, navigation }) => {
@@ -9,6 +9,12 @@ const EducationDetail = ({ route, navigation }) => {
     <View style={styles.container}>
       {/* Kurs Başlığı */}
       <View style={styles.header}>
+        {/* Resmin doğru yüklendiğinden emin olun */}
+        <Image
+          source={require('../assets/app_head_bar.png')} // Yolu kontrol edin
+          style={styles.headerImage}
+          resizeMode="cover"
+        />
         <Text style={styles.headerTitle}>{course.title}</Text>
       </View>
 
@@ -49,16 +55,23 @@ const styles = StyleSheet.create({
     backgroundColor: '#f4f4f4',
   },
   header: {
-    backgroundColor: '#4CAF50',
-    padding: 15,
-    paddingTop: 50, // Yukarıdan daha fazla boşluk
-    marginBottom: 20, // Headbar ile içerik arasında boşluk
+    position: 'relative',
+    height: 150,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 20,
+  },
+  headerImage: {
+    width: '100%',
+    height: '100%',
+    position: 'absolute',
   },
   headerTitle: {
     color: '#fff',
     fontSize: 20,
     fontWeight: 'bold',
     textAlign: 'center',
+    zIndex: 1, // Yazıyı resmin üstüne taşıyor
   },
   content: {
     flex: 1,

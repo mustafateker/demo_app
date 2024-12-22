@@ -21,6 +21,7 @@ import DailyInfoScreen from './app/screens/DailyInfoScreen';
 import RequestScreen from './app/screens/RequestScreen';
 import EducationDetail from './app/screens/EducationDetail';
 import SiriusNedir from './app/screens/SiriusNedir';
+import CostCalculatorScreen from './app/screens/CostCalculatorScreen';
 
 
 const Stack = createStackNavigator();
@@ -134,6 +135,11 @@ export default function App() {
           name="SiriusNedir"
           component={SiriusNedir}
           options={{ headerShown: false, title: 'Sirius Nedir' }}
+        />
+        <Stack.Screen
+          name="CostCalculation"
+          component={CostCalculatorScreen}
+          options={{ headerShown: false, title: 'Maliyet Hesaplama' }}
         />
 
       </Stack.Navigator>

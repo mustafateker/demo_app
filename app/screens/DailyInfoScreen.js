@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Modal, Dimensions } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Modal, Dimensions, Image } from 'react-native';
 
 
 const DailyInfoScreen = () => {
@@ -27,8 +27,15 @@ const DailyInfoScreen = () => {
     <View style={styles.container}>
       {/* Header */}
       <View style={styles.header}>
-        <Text style={styles.title}>Günlük Bilgiler</Text>
-        <Text style={styles.subtitle}>Dikey tarım hakkında günlük ipuçları ve bilgiler</Text>
+        <Image
+          source={require('../assets/app_head_bar.png')}
+          style={styles.headerImage}
+          resizeMode="cover"
+        />
+        <View style={styles.headerTextContainer}>
+          <Text style={styles.title}>Günlük Bilgiler</Text>
+          <Text style={styles.subtitle}>Dikey tarım hakkında günlük ipuçları ve bilgiler</Text>
+        </View>
       </View>
 
       {/* Information Cards */}
@@ -67,14 +74,23 @@ const DailyInfoScreen = () => {
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#F5F5F5' },
+  container: { flex: 1, backgroundColor: '#f1f8f1' },
   header: {
-    padding: 20,
-    paddingTop: Dimensions.get('screen').height * 0.05, // Kameraya göre aşağıda başlar
-    backgroundColor: '#4CAF50',
-    alignItems: 'center',
+    height: Dimensions.get('screen').height * 0.15, // Header yüksekliği
+    position: 'relative',
   },
-  title: { fontSize: 24, color: '#FFF', fontWeight: 'bold' },
+  headerImage: {
+    width: '100%',
+    height: '100%',
+    position: 'absolute',
+  },
+  headerTextContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    //backgroundColor: 'rgba(0, 0, 0, 0.5)', // Yazılar için opak arka plan
+  },
+  title: { fontSize: 24, color: '#FFF', fontWeight: 'bold', textAlign: 'center' },
   subtitle: { fontSize: 16, color: '#E8F5E9', marginTop: 5, textAlign: 'center' },
   cardsContainer: { padding: 10 },
   card: {
