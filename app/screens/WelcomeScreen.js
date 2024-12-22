@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView, ImageBackground } from 'react-native';
+import { View, StyleSheet, TouchableOpacity, Image, ScrollView, ImageBackground } from 'react-native';
 
 const WelcomeScreen = ({ navigation }) => {
   return (
@@ -10,104 +10,98 @@ const WelcomeScreen = ({ navigation }) => {
         style={styles.header}
       >
         <View 
-              style={{
-                flex : 1,
-                width: '95%',
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                marginRight: 22,}}>
-        <TouchableOpacity 
-          style={styles.icons}
-          onPress={() => navigation.navigate('Tasks')} 
+          style={{
+            flex: 1,
+            width: '95%',
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            marginRight: 22,
+          }}
+        >
+          <TouchableOpacity 
+            style={styles.icons}
+            onPress={() => navigation.navigate('Menu')} 
           >
-          <Image 
-            source={require('../assets/menu_icon_design.png')} 
-            style={{ height: 30, resizeMode: 'contain' }} 
-          />
-        </TouchableOpacity>
-        <TouchableOpacity 
-          style={styles.icons}
-          onPress={() => navigation.navigate('Tasks')} 
+            <Image 
+              source={require('../assets/menu_icon_design.png')} 
+              style={{ height: 30, resizeMode: 'contain' }} 
+            />
+          </TouchableOpacity>
+          <TouchableOpacity 
+            style={styles.icons}
+            onPress={() => navigation.navigate('Search')} 
           >
-          <Image 
-            source={require('../assets/search_button_icon_design.png')} 
-            style={{ height: 30, resizeMode: 'contain' }} 
-          />
-        </TouchableOpacity>
+            <Image 
+              source={require('../assets/search_button_icon_design.png')} 
+              style={{ height: 30, resizeMode: 'contain' }} 
+            />
+          </TouchableOpacity>
         </View>
-        
         <Image 
           source={require('../assets/sirius_farm_organic_tarim_text.png')} 
           style={styles.logo} 
         />
       </ImageBackground>
 
-      {/* Grid Alanı */}
+      {/* Hexagon Grid Alanı */}
       <View style={styles.grid}>
-        {/* Günlük Bilgi */}
-        <TouchableOpacity style={styles.hexagon}
-          onPress={() => navigation.navigate('Daily')}
-        >
-          <Image source={require('../assets/daily_information_main_menu_button.png')} style={styles.hexImage} />
-          <Text style={styles.itemText}>Günlük Bilgi</Text>
-        </TouchableOpacity>
+        {/* Hexagon düzeni */}
+        <View style={styles.hexRow}>
+          <TouchableOpacity 
+            style={styles.hexagonSmall} 
+            onPress={() => navigation.navigate('DailyInfo')}
+          >
+            <Image source={require('../assets/daily_information_main_menu_button.png')} style={styles.hexImage} />
+          </TouchableOpacity>
+          <TouchableOpacity 
+            style={styles.hexagonLarge} 
+            onPress={() => navigation.navigate('Tasks')}
+          >
+            <Image source={require('../assets/tasks_main_menu_button.png')} style={styles.hexImage} />
+          </TouchableOpacity>
+          <TouchableOpacity 
+            style={styles.hexagonSmall} 
+            onPress={() => navigation.navigate('Profile')}
+          >
+            <Image source={require('../assets/profile_main_menu_button_design.png')} style={styles.hexImage} />
+          </TouchableOpacity>
+        </View>
 
-        {/* Görevlerim */}
-        <TouchableOpacity
-          style={styles.hexagon}
-          onPress={() => navigation.navigate('Tasks')}
-        >
-          <Image source={require('../assets/tasks_main_menu_button.png')} style={styles.hexImage} />
-          <Text style={styles.itemText}>Görevler</Text>
-        </TouchableOpacity>
+        <View style={[styles.hexRow, styles.offsetRow]}>
+          <TouchableOpacity 
+            style={styles.hexagonLarge} 
+            onPress={() => navigation.navigate('Siribot')}
+          >
+            <Image source={require('../assets/siribot_button_design.png')} style={styles.hexImage} />
+          </TouchableOpacity>
+          <TouchableOpacity 
+            style={styles.hexagonLarge} 
+            onPress={() => navigation.navigate('Education')}
+          >
+            <Image source={require('../assets/education_main_menu_button.png')} style={styles.hexImage} />
+          </TouchableOpacity>
+        </View>
 
-        {/* Profilim */}
-        <TouchableOpacity
-          style={styles.hexagon}
-          onPress={() => navigation.navigate('Profile')} // ProfileScreen'e yönlendirme
-        >
-          <Image source={require('../assets/profile_main_menu_button_design.png')} style={styles.hexImage} />
-          <Text style={styles.itemText}>Profilim</Text>
-        </TouchableOpacity>
-
-        {/* Maliyet Hesapla */}
-        <TouchableOpacity
-          style={styles.hexagon}
-          onPress={() => navigation.navigate('Notifications')}
-        >
-          <Image source={require('../assets/cost_calculation_button_design.png')} style={styles.hexImage} />
-          <Text style={styles.itemText}>Maliyet Hesapla</Text>
-        </TouchableOpacity>
-
-        {/* Eğitimler */}
-        <TouchableOpacity style={styles.hexagon}
-          onPress={() => navigation.navigate('Education')} >
-          <Image source={require('../assets/education_main_menu_button.png')} style={styles.hexImage} />
-          <Text style={styles.itemText}>Eğitimler</Text>
-        </TouchableOpacity>
-
-        {/* Taleplerim */}
-        <TouchableOpacity style={styles.hexagon}
-          onPress={() => navigation.navigate('Request')}
-        >
-          <Image source={require('../assets/request_button_icon.png')} style={styles.hexImage} />
-          <Text style={styles.itemText}>Taleplerim</Text>
-        </TouchableOpacity>
-
-        {/* Sirius Nedir? */}
-        <TouchableOpacity style={styles.hexagon}
-          onPress={() => navigation.navigate('Search')} >
-          <Image source={require('../assets/sirius_nedir_button_design.png')} style={styles.hexImage} />
-          <Text style={styles.itemText}>Sirius Nedir?</Text>
-        </TouchableOpacity>
-
-        {/* Siribot */}
-        <TouchableOpacity style={styles.hexagon}
-          onPress={() => navigation.navigate('Siribot')} >
-
-          <Image source={require('../assets/siribot_button_design.png')} style={styles.hexImage} />
-          <Text style={styles.itemText}>Siribot</Text>
-        </TouchableOpacity>
+        <View style={styles.hexRow}>
+          <TouchableOpacity 
+            style={[styles.hexagonLarge, styles.veryCloseSpacing]} 
+            onPress={() => navigation.navigate('CostCalculation')}
+          >
+            <Image source={require('../assets/cost_calculation_button_design.png')} style={styles.hexImage} />
+          </TouchableOpacity>
+          <TouchableOpacity 
+            style={[styles.hexagonLarge, styles.centeredVeryClose]} 
+            onPress={() => navigation.navigate('Request')}
+          >
+            <Image source={require('../assets/request_button_icon.png')} style={styles.hexImage} />
+          </TouchableOpacity>
+          <TouchableOpacity 
+            style={[styles.hexagonLarge, styles.veryCloseSpacing]} 
+            onPress={() => navigation.navigate('DailyInfo')}
+          >
+            <Image source={require('../assets/sirius_nedir_button_design.png')} style={styles.hexImage} />
+          </TouchableOpacity>
+        </View>
       </View>
     </ScrollView>
   );
@@ -131,47 +125,52 @@ const styles = StyleSheet.create({
     height: 150,
     marginBottom: 20,
   },
-  icons : {
+  icons: {
     width: '10%',
     height: '10%',
     marginLeft: 3,
     marginTop: 30,
   },
-  title: {
-    fontSize: 36,
-    fontWeight: 'bold',
-    color: '#FFF',
-  },
-  subtitle: {
-    fontSize: 20,
-    fontStyle: 'italic',
-    color: '#FFF',
-  },
   grid: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
+    alignItems: 'center',
     justifyContent: 'center',
     marginVertical: 20,
   },
-  hexagon: {
-    width: 100,
-    height: 115,
-    margin: 10,
+  hexRow: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: -10,
+  },
+  offsetRow: {
+    marginTop: -25,
+  },
+  hexagonSmall: {
+    width: 90,
+    height: 100,
+    marginHorizontal: -5,
+    alignItems: 'center',
+    justifyContent: 'center',
+    position: 'relative',
+  },
+  hexagonLarge: {
+    width: 120,
+    height: 140,
+    marginHorizontal: 10,
     alignItems: 'center',
     justifyContent: 'center',
     position: 'relative',
   },
   hexImage: {
-    width: 100,
-    height: 100,
+    width: '100%',
+    height: '100%',
     resizeMode: 'contain',
   },
-  itemText: {
-    marginTop: 10,
-    fontSize: 14,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    color: '#4CAF50',
+  veryCloseSpacing: {
+    marginHorizontal: -10, // Minimum yatay boşluk
+  },
+  centeredVeryClose: {
+    marginTop: -35, // Daha yukarı ve yakın hizalama
   },
 });
 

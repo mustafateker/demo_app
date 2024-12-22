@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Modal, Dimensions } from 'react-native';
 
+
 const DailyInfoScreen = () => {
   const [selectedTip, setSelectedTip] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
