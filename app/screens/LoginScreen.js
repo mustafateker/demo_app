@@ -1,27 +1,55 @@
 import React, { useState } from 'react';
 import {
-    Alert,
-    View,
-    Text,
-    TextInput,
-    TouchableOpacity,
-    StyleSheet,
-    ImageBackground,
-    Image,
+  Alert,
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  StyleSheet,
+  ImageBackground,
+  Image,
+  ActivityIndicator,
 } from 'react-native';
 import CheckBox from 'react-native-check-box';
 import { useNavigation } from '@react-navigation/native';
+import axios from 'axios';
 
 const LoginScreen = () => {
-  const [email, setEmail] = useState('');
+  const [identifier, setIdentifier] = useState('');
   const [password, setPassword] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const navigation = useNavigation();
 
-  const handlePress = () => {
-    Alert.alert('Giriş Yapıldı', 'Başarılı bir şekilde giriş yaptınız.', );
-    navigation.navigate('Welcome');
+  const handleLogin = async () => {
+    if (!identifier || !password) {
+      Alert.alert('Hata', 'Lütfen kullanıcı adı ve parolayı doldurun.');
+      return;
+    }
+
+    setLoading(true);
+    try {
+      const response = await axios.post('https://your-api-url.com/api/auth/login', {
+        identifier,
+        password,
+      });
+
+      if (response.data.token) {
+        Alert.alert('Giriş Başarılı', 'Başarılı bir şekilde giriş yaptınız.');
+        if (rememberMe) {
+          // Giriş bilgilerini saklamak için AsyncStorage kullanabilirsiniz.
+        }
+        navigation.navigate('Welcome');
+      } else {
+        Alert.alert('Giriş Başarısız', 'Kullanıcı adı veya parola yanlış.');
+      }
+    } catch (error) {
+      Alert.alert('Hata', 'Sunucuya bağlanırken bir sorun oluştu.');
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -34,17 +62,14 @@ const LoginScreen = () => {
           source={require('../assets/sirius_farm_organic_tarim_text.png')}
           style={styles.logo}
         />
-
         <Text style={styles.loginText}>GİRİŞ</Text>
-
         <TextInput
           style={styles.input}
           placeholder="Kullanıcı Adı, eposta ya da telefon numarası"
           placeholderTextColor="#888"
-          value={email}
-          onChangeText={setEmail}
+          value={identifier}
+          onChangeText={setIdentifier}
         />
-
         <TextInput
           style={styles.input}
           placeholder="Parola"
@@ -53,31 +78,27 @@ const LoginScreen = () => {
           value={password}
           onChangeText={setPassword}
         />
-
         <View style={styles.rememberMeContainer}>
           <CheckBox
             isChecked={rememberMe}
             onClick={() => setRememberMe(!rememberMe)}
             style={styles.checkbox}
-            tintColors={{ true: '#FFFFFF', false: '#FFFFFF' }}
-            
-            />
+          />
           <Text style={styles.label}>Beni Hatırla</Text>
         </View>
-
-        <TouchableOpacity 
-        style={styles.loginButton} 
-        onPress={handlePress}>
-        <Text style={styles.loginButtonText}>GİRİŞ YAP</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity 
-        style={styles.forgotPasswordButton}
-        onPress={() => navigation.navigate('Password')}
+        {loading ? (
+          <ActivityIndicator size="large" color="#FFF" />
+        ) : (
+          <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
+            <Text style={styles.loginButtonText}>GİRİŞ YAP</Text>
+          </TouchableOpacity>
+        )}
+        <TouchableOpacity
+          style={styles.forgotPasswordButton}
+          onPress={() => navigation.navigate('Password')}
         >
           <Text style={styles.forgotPassword}>Parolamı Unuttum</Text>
         </TouchableOpacity>
-
         <TouchableOpacity
           style={styles.createAccountButton}
           onPress={() => navigation.navigate('Register')}
@@ -104,14 +125,13 @@ const styles = StyleSheet.create({
     width: 300,
     height: 180,
     resizeMode: 'contain',
-   
   },
   loginText: {
     fontSize: 40,
     fontWeight: 'bold',
     color: '#FFF',
     marginBottom: 20,
-    marginTop : 10,
+    marginTop: 10,
   },
   input: {
     width: '100%',
@@ -152,7 +172,6 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     alignItems: 'center',
     marginBottom: 10,
-    
   },
   loginButtonText: {
     color: '#FFF',
