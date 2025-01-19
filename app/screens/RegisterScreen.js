@@ -1,8 +1,9 @@
-
 import React, { useState } from 'react';
 import { ImageBackground, Image, View, StyleSheet, TouchableOpacity, TextInput, Text, Alert, ScrollView } from 'react-native';
 import CheckBox from 'react-native-check-box';
 import { useNavigation } from '@react-navigation/native';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '../firebase';
 
 function RegisterScreen() {
     const [email, setEmail] = useState("");
@@ -17,7 +18,7 @@ function RegisterScreen() {
 
     const navigation = useNavigation();
 
-    const handlePress = () => {
+    const handleRegister = () => {
         if (password !== confirmPassword) {
             Alert.alert("Hata", "Şifreler uyuşmuyor!");
             return;
@@ -28,8 +29,14 @@ function RegisterScreen() {
             return;
         }
 
-        Alert.alert("Başarılı", "Kayıt başarılı!");
-        navigation.navigate('Welcome');
+        createUserWithEmailAndPassword(auth, email, password)
+            .then((userCredential) => {
+                Alert.alert("Başarılı", "Kayıt başarılı!");
+                navigation.navigate('Welcome');
+            })
+            .catch((error) => {
+                Alert.alert("Hata", error.message);
+            });
     };
 
     return (
@@ -103,7 +110,7 @@ function RegisterScreen() {
                     </View>
                 </View>
 
-                <TouchableOpacity style={styles.registerButton} onPress={handlePress}>
+                <TouchableOpacity style={styles.registerButton} onPress={handleRegister}>
                     <Image style={styles.image} source={require('../assets/register_button_design.png')} />
                 </TouchableOpacity>
             </ScrollView>
@@ -155,10 +162,7 @@ const styles = StyleSheet.create({
         width: '100%',
         flexDirection: 'row',
         justifyContent: 'space-between',
-        
-        
     },
-        
     checkboxContainer: {
         width: '90%',
         marginBottom: 2,
@@ -186,5 +190,5 @@ const styles = StyleSheet.create({
         resizeMode: 'contain',
     },
 });
- 
+
 export default RegisterScreen;
