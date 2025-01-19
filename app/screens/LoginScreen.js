@@ -12,45 +12,9 @@ import {
 } from 'react-native';
 import CheckBox from 'react-native-check-box';
 import { useNavigation } from '@react-navigation/native';
-import axios from 'axios';
 
 const LoginScreen = () => {
-  const [identifier, setIdentifier] = useState('');
-  const [password, setPassword] = useState('');
-  const [rememberMe, setRememberMe] = useState(false);
-  const [loading, setLoading] = useState(false);
-
-  const navigation = useNavigation();
-
-  const handleLogin = async () => {
-    if (!identifier || !password) {
-      Alert.alert('Hata', 'Lütfen kullanıcı adı ve parolayı doldurun.');
-      return;
-    }
-
-    setLoading(true);
-    try {
-      const response = await axios.post('https://your-api-url.com/api/auth/login', {
-        identifier,
-        password,
-      });
-
-      if (response.data.token) {
-        Alert.alert('Giriş Başarılı', 'Başarılı bir şekilde giriş yaptınız.');
-        if (rememberMe) {
-          // Giriş bilgilerini saklamak için AsyncStorage kullanabilirsiniz.
-        }
-        navigation.navigate('Welcome');
-      } else {
-        Alert.alert('Giriş Başarısız', 'Kullanıcı adı veya parola yanlış.');
-      }
-    } catch (error) {
-      Alert.alert('Hata', 'Sunucuya bağlanırken bir sorun oluştu.');
-      console.error(error);
-    } finally {
-      setLoading(false);
-    }
-  };
+ 
 
   return (
     <ImageBackground

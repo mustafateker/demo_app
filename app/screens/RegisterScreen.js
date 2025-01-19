@@ -12,7 +12,6 @@ import {
 } from 'react-native';
 import CheckBox from 'react-native-check-box';
 import { useNavigation } from '@react-navigation/native';
-import axios from 'axios';
 
 function RegisterScreen() {
   const [email, setEmail] = useState('');
@@ -37,19 +36,27 @@ function RegisterScreen() {
     }
 
     try {
-      const response = await axios.post('https://your-api-url.com/api/auth/register', {
-        email,
-        firstName,
-        lastName,
-        username,
-        password,
+      const response = await fetch('https://your-mongodb-api-url/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email,
+          firstName,
+          lastName,
+          username,
+          password,
+        }),
       });
 
-      if (response.data.success) {
+      const data = await response.json();
+
+      if (data.success) {
         Alert.alert('Başarılı', 'Kayıt başarılı!');
         navigation.navigate('Welcome');
       } else {
-        Alert.alert('Hata', response.data.message || 'Bir hata oluştu.');
+        Alert.alert('Hata', data.message || 'Bir hata oluştu.');
       }
     } catch (error) {
       Alert.alert('Hata', 'Sunucuya bağlanılamadı. Lütfen tekrar deneyin.');
@@ -133,28 +140,27 @@ function RegisterScreen() {
     </ImageBackground>
   );
 }
-
 const styles = StyleSheet.create({
-    background: {
-        flex: 1,
-    },
-    scrollContainer: {
-        alignItems: "center",
-        paddingVertical: 30,
-    },
-    logoContainer: {
-        marginVertical: 60,
-        marginBottom: 10,
-    },
-    logo: {
-        width: 300,
-        height: 180,
-        resizeMode: 'contain',
-    },
-    inputContainer: {
-        width: '90%',
-        marginBottom: 5,
-    },
+  background: {
+    flex: 1,
+  },
+  scrollContainer: {
+    alignItems: "center",
+    paddingVertical: 30,
+  },
+  logoContainer: {
+    marginVertical: 60,
+    marginBottom: 10,
+  },
+  logo: {
+    width: 300,
+    height: 180,
+    resizeMode: 'contain',
+  },
+  inputContainer: {
+    width: '90%',
+    marginBottom: 5,
+  },
     input: {
         width: '100%',
         backgroundColor: '#fff',
