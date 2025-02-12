@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { ImageBackground, Image, View, StyleSheet, TouchableOpacity, TextInput, Text } from 'react-native';
-import CheckBox from 'react-native-check-box'; // react-native-check-box eklendi
+import { ImageBackground, Image, View, StyleSheet, TouchableOpacity, TextInput, Text, Alert } from 'react-native';
+import CheckBox from 'react-native-check-box';
 import { useNavigation } from '@react-navigation/native';
 
 function RegisterScreen() {
@@ -10,13 +10,15 @@ function RegisterScreen() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
-    const [isTermsAccepted, setIsTermsAccepted] = useState(false); // 1. Checkbox
-    const [isKVKKAccepted, setIsKVKKAccepted] = useState(false); // 2. Checkbox
-    const [isNewsletterSubscribed, setIsNewsletterSubscribed] = useState(false); // 3. Checkbox
+    const [isTermsAccepted, setIsTermsAccepted] = useState(false);
+    const [isKVKKAccepted, setIsKVKKAccepted] = useState(false);
+    const [isNewsletterSubscribed, setIsNewsletterSubscribed] = useState(false);
 
     const navigation = useNavigation();
 
     const handlePress = () => {
+        Alert.alert("kayıt başarılı");
+        navigation.navigate('Profile');
         if (password !== confirmPassword) {
             console.log("Şifreler uyuşmuyor!");
             return;
@@ -25,15 +27,10 @@ function RegisterScreen() {
             console.log("Kullanıcı şartlarını kabul etmelisiniz!");
             return;
         }
-        console.log("Mail:", email);
-        console.log("İsim:", firstName);
-        console.log("Soyisim:", lastName);
-        console.log("Kullanıcı Adı:", username);
-        console.log("Şifre:", password);
-        console.log("KVKK Onayı:", isKVKKAccepted);
-        console.log("Bülten Aboneliği:", isNewsletterSubscribed);
+      
 
-        navigation.navigate('Home');
+        // Kullanıcıyı ProfileScreen'e yönlendir
+        
     };
 
     return (
@@ -89,7 +86,6 @@ function RegisterScreen() {
                 />
             </View>
 
-            {/* CheckBox Alanları */}
             <View style={styles.checkboxContainer}>
                 <CheckBox
                     isChecked={isTermsAccepted}
@@ -144,7 +140,7 @@ const styles = StyleSheet.create({
     checkboxContainer: {
         width: '90%',
         marginBottom: 20,
-        alignItems: 'flex-start', // Checkboxları sola hizala
+        alignItems: 'flex-start',
     },
     imageButton: {
         width: "80%",
