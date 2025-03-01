@@ -1,15 +1,20 @@
 import React from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView } from 'react-native';
-
+import { SafeAreaView } from 'react-native';
 const ProfileScreen = ({ navigation }) => {
   const handleNavigate = (screen) => {
     navigation.navigate(screen);
   };
 
   return (
+    <SafeAreaView style={styles.container}>
     <ScrollView style={styles.container}>
       {/* Profil Bilgileri ve Arkaplan */}
       <View style={styles.header}>
+        <Image 
+          source={require('../assets/app_head_bar.png')} 
+          style={styles.headerBackground} 
+        />
         <View style={styles.profileContainer}>
           <Image
             source={{ uri: 'https://cdn-icons-png.flaticon.com/512/3135/3135715.png' }}
@@ -27,7 +32,7 @@ const ProfileScreen = ({ navigation }) => {
         <MenuItem icon="🔒" text="Parola Değiştir" onPress={() => handleNavigate('ChangePassword')} />
         <MenuItem icon="🔔" text="Bildirimler ve İzinler" onPress={() => handleNavigate('Notifications')} />
         <MenuItem icon="📞" text="İletişim Bilgileri" onPress={() => handleNavigate('Concat')} />
-       <MenuItem icon="⚙️" text="Hesapları Yönet" onPress={() => handleNavigate('AccountManagement')} />
+        <MenuItem icon="⚙️" text="Hesapları Yönet" onPress={() => handleNavigate('AccountManagement')} />
       </View>
 
       {/* Çıkış Butonu */}
@@ -35,6 +40,7 @@ const ProfileScreen = ({ navigation }) => {
         <Text style={styles.logoutText}>⏻ Çıkış Yap</Text>
       </TouchableOpacity>
     </ScrollView>
+    </SafeAreaView>
   );
 };
 
@@ -52,14 +58,18 @@ const styles = StyleSheet.create({
     backgroundColor: '#F9F9F9',
   },
   header: {
-    backgroundColor: '#4CAF50',
-    paddingVertical: 50,
+    position: 'relative',
     alignItems: 'center',
-    borderBottomLeftRadius: 25,
-    borderBottomRightRadius: 25,
+    justifyContent: 'center',
+    height: 180,
+  },
+  headerBackground: {
+    position: 'absolute',
+    width: '100%',
+    height: '100%',
+    resizeMode: 'cover',
   },
   profileContainer: {
-    marginTop: 20,
     alignItems: 'center',
   },
   profileImage: {
@@ -67,7 +77,7 @@ const styles = StyleSheet.create({
     height: 100,
     borderRadius: 50,
     backgroundColor: '#FFF',
-    marginBottom: 15,
+    marginBottom: 10,
   },
   name: {
     color: '#FFF',
