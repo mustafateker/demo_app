@@ -128,7 +128,9 @@ const RequestScreen = () => {
 };
 
 const styles = StyleSheet.create({
-    container: { flex: 1, backgroundColor: '#F5F5F5' },
+    container: { 
+        flex: 1, 
+        backgroundColor: '#F5F5F5' },
     header: {
         height: Dimensions.get('screen').height * 0.10, // Header yüksekliği
         position: 'relative',

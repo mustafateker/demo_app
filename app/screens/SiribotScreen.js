@@ -4,216 +4,175 @@ import {
   Text,
   TextInput,
   StyleSheet,
-  FlatList,
   TouchableOpacity,
   Image,
-  KeyboardAvoidingView,
-  Platform,
-  ScrollView, // ScrollView ekliyoruz
+  ScrollView,
+  Dimensions,
 } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import axios from "axios";
 
 const SiriBotScreen = () => {
-  const [inputText, setInputText] = useState('');
-  const [chatHistory, setChatHistory] = useState([]); // Soru ve cevapları tutmak için dizi
-  const [showQuestions, setShowQuestions] = useState(false); // Soruların görünürlüğü
+  const [messages, setMessages] = useState([]);
+  const [input, setInput] = useState("");
+  const navigation = useNavigation();
 
-  const quickQuestions = [
-    'Dikey tarım nedir?',
-    'Sistemi nasıl kurabilirim?',
-    'Hangi ürünleri yetiştirebilirim?',
-    'Hangi gübre ve mineralleri kullanabilirim?',
-  ];
+  const sendMessage = async () => {
+    if (input.trim() === "") return;
 
-  const answerMap = {
-    'Dikey tarım nedir?': 'Dikey tarım, bitkilerin dikey olarak yetiştirilmesi yöntemidir.',
-    'Sistemi nasıl kurabilirim?': 'Dikey tarım sistemi kurmak için uygun malzemeler ve planlama gereklidir.',
-    'Hangi ürünleri yetiştirebilirim?': 'Lahanadan, marula kadar pek çok ürün yetiştirebilirsiniz.',
-    'Hangi gübre ve mineralleri kullanabilirim?': 'Organik gübre ve özel mineraller kullanabilirsiniz.',
-  };
+    const newMessages = [...messages, { text: input, sender: "user" }];
+    setMessages(newMessages);
+    setInput("");
 
-  const renderChatBubble = ({ item }) => {
-    return (
-      <View style={item.type === 'question' ? styles.questionBubble : styles.answerBubble}>
-        <Text style={item.type === 'question' ? styles.questionText : styles.answerText}>
-          {item.text}
-        </Text>
-      </View>
-    );
-  };
+    try {
+      const response = await axios.post("http://192.168.1.62:5000/chat", {
+        message: input,
+      });
 
-  const handleQuestionPress = (question) => {
-    const answer = answerMap[question];
-    if (answer) {
-      setChatHistory(prevHistory => [
-        ...prevHistory,
-        { type: 'question', text: question },
-        { type: 'answer', text: answer },
-      ]);
-      setShowQuestions(false); // Soruları gizle
+      setMessages([...newMessages, { text: response.data.response, sender: "bot" }]);
+    } catch (error) {
+      console.error("API hatası:", error);
+      setMessages([...newMessages, { text: "Bağlantı hatası!", sender: "bot" }]);
     }
   };
 
   return (
-    <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
-      {/* Header */}
+    <View style={styles.container}>
       <View style={styles.header}>
-        <View style={styles.headerContent}>
-          <Image source={require('../assets/siribot_tasarım.png')} style={styles.botIcon} />
-          <Text style={styles.headerTitle}>Siribot</Text>
-        </View>
-        <TouchableOpacity>
-          <Image source={require('../assets/siribot_tasarım.png')} style={styles.backIcon} />
-        </TouchableOpacity>
-      </View>
-
-      {/* Answer and Question Bubbles */}
-      <ScrollView contentContainerStyle={styles.answerContainer}>
-        <FlatList
-          data={chatHistory}
-          keyExtractor={(item, index) => index.toString()}
-          renderItem={renderChatBubble}
-          scrollEnabled={false} // FlatList'in kaydırılmasını devre dışı bırakıyoruz
+        <Image
+          source={require('../assets/app_head_bar.png')}
+          style={styles.headerImage}
+          resizeMode="cover"
         />
+        <View style={styles.headerContent}>
+          <View style={styles.headerLeft}>
+            <Image
+              source={require('../assets/siribot_tasarım.png')}
+              style={styles.headerIcon}
+            />
+            <Text style={styles.title}>Siribot</Text>
+          </View>
+          <TouchableOpacity onPress={() => navigation.navigate('Welcome')}>
+            <Image
+              source={require('../assets/back_icon.png')}
+              style={styles.backIcon}
+            />
+          </TouchableOpacity>
+        </View>
+      </View>
+      <ScrollView contentContainerStyle={styles.messagesContainer}>
+        {messages.map((msg, index) => (
+          <View
+            key={index}
+            style={[
+              styles.messageBubble,
+              msg.sender === "user" ? styles.userBubble : styles.botBubble,
+            ]}
+          >
+            <Text style={styles.messageText}>{msg.text}</Text>
+          </View>
+        ))}
       </ScrollView>
-
-      {/* Input Area */}
-      <TouchableOpacity style={styles.inputArea} onPress={() => setShowQuestions(!showQuestions)}>
+      <View style={styles.inputContainer}>
         <TextInput
           style={styles.input}
+          value={input}
+          onChangeText={setInput}
           placeholder="Bana sormak istediğin bir şey var mı?"
-          placeholderTextColor="#888"
-          value={inputText}
-          onChangeText={setInputText}
-          editable={false} // Kullanıcıdan metin girişi alınmasın
         />
-      </TouchableOpacity>
-
-      {/* Quick Questions (Hidden initially) */}
-      {showQuestions && (
-        <FlatList
-          data={quickQuestions}
-          keyExtractor={(item, index) => index.toString()}
-          renderItem={({ item }) => (
-            <TouchableOpacity
-              style={styles.questionItem}
-              onPress={() => handleQuestionPress(item)}
-            >
-              <Text style={styles.questionText}>{item}</Text>
-            </TouchableOpacity>
-          )}
-          contentContainerStyle={styles.questionsList}
-        />
-      )}
-    </KeyboardAvoidingView>
+        <TouchableOpacity onPress={sendMessage} style={styles.sendButton}>
+          <Text style={styles.sendButtonText}>➤</Text>
+        </TouchableOpacity>
+      </View>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#008650', // Sayfanın arka plan rengi
+    backgroundColor: '#F5F5F5'
   },
   header: {
-    backgroundColor: '#6fce55', // Header arka plan rengi
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingHorizontal: 20,
-    paddingVertical: 15,
-    paddingTop: 50,
-    borderBottomLeftRadius: 20,
-    borderBottomRightRadius: 20,
-    shadowColor: '#000',
-    shadowOpacity: 0.2,
-    shadowRadius: 4,
-    elevation: 5,
+    height: Dimensions.get('screen').height * 0.10,
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    zIndex: 1,
+  },
+  headerImage: {
+    width: '100%',
+    height: '100%',
+    position: 'absolute',
   },
   headerContent: {
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: 10,
+    height: '100%',
   },
-  botIcon: {
-    width: 40,
-    height: 40,
-    marginRight: 10,
-  },
-  headerTitle: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: '#fff',
-  },
-  backIcon: {
-    width: 24,
-    height: 24,
-    tintColor: '#fff',
-  },
-  answerContainer: {
-    paddingHorizontal: 15,
-    paddingTop: 10,
-    flexGrow: 1, // Esnek büyüme
-  },
-  answerBubble: {
-    backgroundColor: '#fff',
-    padding: 15,
-    borderRadius: 20,
-    marginVertical: 5,
-    alignSelf: 'flex-start',
-    maxWidth: '80%',
-    shadowColor: '#000',
-    shadowOpacity: 0.2,
-    shadowRadius: 4,
-    elevation: 5,
-  },
-  questionBubble: {
-    backgroundColor: '#6fce55',
-    padding: 15,
-    borderRadius: 20,
-    marginVertical: 5,
-    alignSelf: 'flex-end',
-    maxWidth: '80%',
-    shadowColor: '#000',
-    shadowOpacity: 0.2,
-    shadowRadius: 4,
-    elevation: 5,
-  },
-  answerText: {
-    fontSize: 16,
-    color: '#333',
-  },
-  questionText: {
-    fontSize: 16,
-    color: '#fff', // Soru metni beyaz
-  },
-  inputArea: {
+  headerLeft: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingHorizontal: 15,
-    paddingVertical: 10,
-    backgroundColor: '#fff',
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
-    shadowColor: '#000',
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 5,
+  },
+  backIcon: {
+    width: 40,
+    height: 40,
+  },
+  headerIcon: {
+    width: 50,
+    height: 50,
+    marginRight: 15,
+  },
+  title: {
+    fontSize: 30,
+    fontWeight: 'bold',
+    color: '#FFF',
+  },
+  messagesContainer: {
+    padding: 10,
+    paddingTop: Dimensions.get('screen').height * 0.12,
+    marginTop: Dimensions.get('screen').height * 0.10,
+  },
+  messageBubble: {
+    padding: 10,
+    borderRadius: 10,
+    marginVertical: 5,
+    maxWidth: '80%',
+  },
+  userBubble: {
+    alignSelf: 'flex-end',
+    backgroundColor: '#D3D3D3',
+  },
+  botBubble: {
+    alignSelf: 'flex-start',
+    backgroundColor: '#2E8B57',
+  },
+  messageText: { color: 'white' },
+  inputContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 10,
+    backgroundColor: 'white',
+    borderTopWidth: 1,
+    borderColor: '#ccc',
   },
   input: {
     flex: 1,
-    fontSize: 16,
-    color: '#333',
-    paddingHorizontal: 10,
-    backgroundColor: '#F5F5F5',
+    padding: 10,
+    borderWidth: 1,
+    borderColor: '#ccc',
     borderRadius: 20,
   },
-  questionsList: {
-    padding: 15,
+  sendButton: {
+    marginLeft: 10,
+    backgroundColor: '#2E8B57',
+    padding: 10,
+    borderRadius: 20,
   },
-  questionItem: {
-    backgroundColor: '#6fce55', // Soru arka plan rengi
-    padding: 15,
-    borderRadius: 15,
-    marginBottom: 15,
-  },
+  sendButtonText: { color: 'white', fontSize: 18 },
 });
 
 export default SiriBotScreen;
