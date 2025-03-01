@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -7,23 +7,45 @@ import {
   FlatList,
   TouchableOpacity,
   Image,
-} from 'react-native';
+} from "react-native";
 
 const SearchScreen = ({ navigation }) => {
-  const [searchText, setSearchText] = useState('');
+  const [searchText, setSearchText] = useState("");
 
-  const searchIconSrc = require('../assets/search_button_icon.png');
-  const backIconSrc = require('../assets/cross_icon.png');
+  const searchIconSrc = require("../assets/search_button_icon.png");
+  const backIconSrc = require("../assets/cross_icon.png");
 
   const data = [
-    { id: '1', title: 'Item-1', description: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.' },
-    { id: '2', title: 'Item-2', description: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.' },
-    { id: '3', title: 'Item-3', description: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.' },
-    { id: '4', title: 'Item-4', description: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.' },
+    {
+      id: "1",
+      title: "Item-1",
+      description:
+        "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+    },
+    {
+      id: "2",
+      title: "Item-2",
+      description:
+        "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+    },
+    {
+      id: "3",
+      title: "Item-3",
+      description:
+        "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+    },
+    {
+      id: "4",
+      title: "Item-4",
+      description:
+        "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+    },
   ];
 
-  const filteredData = data.filter(item =>
-    `${item.title} ${item.description}`.toLowerCase().includes(searchText.toLowerCase())
+  const filteredData = data.filter((item) =>
+    `${item.title} ${item.description}`
+      .toLowerCase()
+      .includes(searchText.toLowerCase())
   );
 
   const renderItem = ({ item }) => (
@@ -42,7 +64,6 @@ const SearchScreen = ({ navigation }) => {
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <Image source={backIconSrc} style={styles.backIcon} />
         </TouchableOpacity>
-        <Text style={styles.headerTitle}>Ara</Text>
       </View>
 
       <View style={styles.searchBar}>
@@ -63,7 +84,7 @@ const SearchScreen = ({ navigation }) => {
         keyExtractor={(item) => item.id}
         renderItem={renderItem}
         ListEmptyComponent={
-          <View style={{ alignItems: 'center', marginTop: 20 }}>
+          <View style={{ alignItems: "center", marginTop: 20 }}>
             <Text style={styles.noResults}>Sonuç bulunamadı</Text>
           </View>
         }
@@ -75,13 +96,13 @@ const SearchScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F5F5F5',
+    backgroundColor: "#F5F5F5",
   },
-    header: {
-    backgroundColor: '#4CAF50',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
+  header: {
+    backgroundColor: "#4CAF50",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
     paddingHorizontal: 20,
     paddingVertical: 15,
     paddingTop: 50, // Safe area için
@@ -89,25 +110,25 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 20,
   },
   headerText: {
-    color: '#fff',
+    color: "#fff",
     fontSize: 22,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   backIcon: {
     width: 24,
     height: 24,
-    tintColor: '#fff',
+    tintColor: "#fff",
   },
   headerTitle: {
     fontSize: 22,
-    fontWeight: 'bold',
-    color: '#fff',
+    fontWeight: "bold",
+    color: "#fff",
     marginLeft: 20,
   },
   searchBar: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: '#fff',
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "#fff",
     margin: 15,
     borderRadius: 8,
     paddingHorizontal: 10,
@@ -115,22 +136,22 @@ const styles = StyleSheet.create({
   searchInput: {
     flex: 1,
     fontSize: 16,
-    color: '#333',
+    color: "#333",
   },
   searchIcon: {
     width: 24,
     height: 24,
-    tintColor: '#888',
+    tintColor: "#888",
   },
   itemContainer: {
-    flexDirection: 'row',
-    alignItems: 'flex-start',
-    backgroundColor: '#fff',
+    flexDirection: "row",
+    alignItems: "flex-start",
+    backgroundColor: "#fff",
     marginHorizontal: 15,
     marginVertical: 5,
     padding: 10,
     borderRadius: 8,
-    shadowColor: '#000',
+    shadowColor: "#000",
     shadowOpacity: 0.1,
     shadowRadius: 4,
     elevation: 2,
@@ -138,7 +159,7 @@ const styles = StyleSheet.create({
   itemIcon: {
     width: 32,
     height: 32,
-    tintColor: '#6FAE45',
+    tintColor: "#6FAE45",
     marginRight: 10,
   },
   textContainer: {
@@ -146,18 +167,18 @@ const styles = StyleSheet.create({
   },
   itemTitle: {
     fontSize: 18,
-    fontWeight: 'bold',
-    color: '#333',
+    fontWeight: "bold",
+    color: "#333",
   },
   itemDescription: {
     fontSize: 14,
-    color: '#666',
+    color: "#666",
     marginTop: 4,
   },
   noResults: {
-    textAlign: 'center',
+    textAlign: "center",
     fontSize: 16,
-    color: '#666',
+    color: "#666",
     marginTop: 20,
   },
 });

@@ -80,7 +80,9 @@ const TasksScreen = () => {
   const renderTask = ({ item }) => (
     <View style={[styles.taskItem, { borderLeftColor: item.color }]}>
       <Text style={[styles.taskDate, { color: "#4caf50" }]}>{item.date}</Text>
-      <Text style={[styles.taskTitle, { color: item.color }]}>{item.title}</Text>
+      <Text style={[styles.taskTitle, { color: item.color }]}>
+        {item.title}
+      </Text>
       <TouchableOpacity onPress={() => handleEditTask(item)}>
         <Icon name="pencil" size={20} color="#4caf50" />
       </TouchableOpacity>
@@ -107,7 +109,10 @@ const TasksScreen = () => {
       <StatusBar barStyle="light-content" backgroundColor="#4caf50" />
       <View style={styles.appBar}>
         <Text style={styles.appBarText}>Görev Takvimi</Text>
-        <TouchableOpacity onPress={() => setModalVisible(true)} style={styles.addButtonIcon}>
+        <TouchableOpacity
+          onPress={() => setModalVisible(true)}
+          style={styles.addButtonIcon}
+        >
           <Icon name="plus" size={30} color="#fff" />
         </TouchableOpacity>
       </View>
@@ -166,7 +171,10 @@ const TasksScreen = () => {
             <TouchableOpacity style={styles.addButton} onPress={handleAddTask}>
               <Text style={styles.buttonText}>Görev Ekle</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.cancelButton} onPress={resetTaskForm}>
+            <TouchableOpacity
+              style={styles.cancelButton}
+              onPress={resetTaskForm}
+            >
               <Text style={styles.buttonText}>İptal</Text>
             </TouchableOpacity>
           </View>
@@ -217,7 +225,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   addButtonIcon: {
-    marginLeft: 'auto',
+    marginLeft: "auto",
   },
   calendar: {
     marginTop: 10,
@@ -269,8 +277,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   colorText: {
-    fontSize
-    : 16,
+    fontSize: 16,
     marginRight: 10,
   },
   colorOption: {

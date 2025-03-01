@@ -1,17 +1,66 @@
-import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
-import * as Progress from 'react-native-progress';
+import React, { useState } from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  Image,
+  FlatList,
+} from "react-native";
+import * as Progress from "react-native-progress";
 
 const EducationDetail = ({ route, navigation }) => {
   const { course } = route.params;
+
+  // Eğitimleri listelemek için state
+  const [showAllCourses, setShowAllCourses] = useState(false);
+
+  // Örnek eğitim verisi
+  const courses = [
+    {
+      id: "1",
+      title: "React Native Başlangıç",
+      progress: 0.7,
+      details:
+        "React Native ile mobil uygulama geliştirmeye başlamak için gerekli bilgiler.",
+    },
+    {
+      id: "2",
+      title: "JavaScript Derinlemesine",
+      progress: 0.5,
+      details: "JavaScript’in derinliklerine inmek için gereken tüm bilgiler.",
+    },
+    {
+      id: "3",
+      title: "Python ile Veri Bilimi",
+      progress: 0.8,
+      details: "Python ile veri bilimi konusunda uzmanlaşmaya yönelik kurs.",
+    },
+    // Diğer kurslar eklenebilir
+  ];
+
+  // Kursları listeleme işlemi
+  const renderCourseItem = ({ item }) => (
+    <View style={styles.courseItem}>
+      <Text style={styles.courseTitle}>{item.title}</Text>
+      <Progress.Bar
+        progress={item.progress}
+        width={null}
+        color="#4CAF50"
+        style={styles.progressBar}
+      />
+      <Text style={styles.progressText}>{`${Math.round(
+        item.progress * 100
+      )}% Tamamlandı`}</Text>
+    </View>
+  );
 
   return (
     <View style={styles.container}>
       {/* Kurs Başlığı */}
       <View style={styles.header}>
-        {/* Resmin doğru yüklendiğinden emin olun */}
         <Image
-          source={require('../assets/app_head_bar.png')} // Yolu kontrol edin
+          source={require("../assets/app_head_bar.png")}
           style={styles.headerImage}
           resizeMode="cover"
         />
@@ -20,7 +69,6 @@ const EducationDetail = ({ route, navigation }) => {
 
       {/* Kurs Detayları */}
       <View style={styles.content}>
-        {/* İlerleme Durumu */}
         <Text style={styles.sectionTitle}>Tamamlanma Durumu</Text>
         <Progress.Bar
           progress={course.progress}
@@ -28,20 +76,42 @@ const EducationDetail = ({ route, navigation }) => {
           color="#4CAF50"
           style={styles.progressBar}
         />
-        <Text style={styles.progressText}>{`${Math.round(course.progress * 100)}% Tamamlandı`}</Text>
+        <Text style={styles.progressText}>{`${Math.round(
+          course.progress * 100
+        )}% Tamamlandı`}</Text>
 
-        {/* Açıklama */}
         <Text style={styles.sectionTitle}>Kurs Açıklaması</Text>
         <Text style={styles.description}>
-          Bu kurs, {course.title.toLowerCase()} alanında derinlemesine bilgi ve pratik beceri kazanmanızı sağlar.
+          Bu kurs, {course.title.toLowerCase()} alanında derinlemesine bilgi ve
+          pratik beceri kazanmanızı sağlar.
         </Text>
 
-        {/* Kurs İçeriği */}
         <Text style={styles.sectionTitle}>Kurs İçeriği</Text>
         <Text style={styles.details}>{course.details}</Text>
 
+        {/* "Tümü Gör" Butonu */}
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => setShowAllCourses(!showAllCourses)}
+        >
+          <Text style={styles.buttonText}>Tümü Gör</Text>
+        </TouchableOpacity>
+
+        {/* Eğitimleri Listele */}
+        {showAllCourses && (
+          <FlatList
+            data={courses}
+            renderItem={renderCourseItem}
+            keyExtractor={(item) => item.id}
+            style={styles.courseList}
+          />
+        )}
+
         {/* Buton */}
-        <TouchableOpacity style={styles.button} onPress={() => console.log('Kursa devam et')}>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => console.log("Kursa devam et")}
+        >
           <Text style={styles.buttonText}>Kursa Devam Et</Text>
         </TouchableOpacity>
       </View>
@@ -52,26 +122,26 @@ const EducationDetail = ({ route, navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f4f4f4',
+    backgroundColor: "#f4f4f4",
   },
   header: {
-    position: 'relative',
+    position: "relative",
     height: 150,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     marginBottom: 20,
   },
   headerImage: {
-    width: '100%',
-    height: '100%',
-    position: 'absolute',
+    width: "100%",
+    height: "100%",
+    position: "absolute",
   },
   headerTitle: {
-    color: '#fff',
+    color: "#fff",
     fontSize: 20,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    zIndex: 1, // Yazıyı resmin üstüne taşıyor
+    fontWeight: "bold",
+    textAlign: "center",
+    zIndex: 1,
   },
   content: {
     flex: 1,
@@ -79,8 +149,8 @@ const styles = StyleSheet.create({
   },
   sectionTitle: {
     fontSize: 18,
-    fontWeight: 'bold',
-    color: '#4CAF50',
+    fontWeight: "bold",
+    color: "#4CAF50",
     marginBottom: 10,
     marginTop: 20,
   },
@@ -89,29 +159,39 @@ const styles = StyleSheet.create({
   },
   progressText: {
     fontSize: 14,
-    color: '#888',
+    color: "#888",
   },
   description: {
     fontSize: 14,
-    color: '#333',
+    color: "#333",
     lineHeight: 20,
   },
   details: {
     fontSize: 14,
-    color: '#555',
+    color: "#555",
     lineHeight: 20,
   },
   button: {
-    backgroundColor: '#4CAF50',
+    backgroundColor: "#4CAF50",
     padding: 15,
     borderRadius: 10,
-    alignItems: 'center',
+    alignItems: "center",
     marginTop: 20,
   },
   buttonText: {
-    color: '#fff',
+    color: "#fff",
     fontSize: 16,
-    fontWeight: 'bold',
+    fontWeight: "bold",
+  },
+  courseList: {
+    marginTop: 20,
+  },
+  courseItem: {
+    marginBottom: 15,
+  },
+  courseTitle: {
+    fontSize: 16,
+    fontWeight: "bold",
   },
 });
 
