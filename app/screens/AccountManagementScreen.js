@@ -1,7 +1,9 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet, FlatList, TouchableOpacity, Image, Alert } from "react-native";
+import { View, Text, StyleSheet, FlatList, TouchableOpacity, Image, Alert, ImageBackground } from "react-native";
+import Icon from "react-native-vector-icons/FontAwesome";
+import { SafeAreaView } from "react-native";
 
-const AccountManagementScreen = () => {
+const AccountManagementScreen = ({ navigation }) => {
   const [accounts, setAccounts] = useState([
     { id: "1", name: "Kişisel Gmail", email: "example@gmail.com" },
     { id: "2", name: "İş Hesabı", email: "work@example.com" },
@@ -59,8 +61,16 @@ const AccountManagementScreen = () => {
   );
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.header}>Hesaplarımı Yönet</Text>
+    <SafeAreaView style={styles.container}>
+      {/* Header */}
+      <ImageBackground source={require('../assets/app_head_bar.png')} style={styles.header}>
+        <TouchableOpacity onPress={() => navigation.goBack()}> 
+          <Icon name="arrow-left" size={24} color="#fff" />
+        </TouchableOpacity>
+        <Text style={styles.headerText}>Hesaplarımı Yönet</Text>
+        <Icon name="users" size={24} color="#fff" />
+      </ImageBackground>
+      
       <FlatList
         data={accounts}
         keyExtractor={(item) => item.id}
@@ -70,88 +80,91 @@ const AccountManagementScreen = () => {
       <TouchableOpacity style={styles.addButton} onPress={handleAddAccount}>
         <Text style={styles.addButtonText}>+ Hesap Ekle</Text>
       </TouchableOpacity>
-    </View>
+    </SafeAreaView>
   );
 };
-const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: "#f8f9fa",
-      paddingTop: 50, // Üst boşluk
-      paddingHorizontal: 20,
-    },
-    header: {
-      fontSize: 24,
-      fontWeight: "bold",
-      marginBottom: 20,
-      textAlign: "center",
-      color: "#343a40", // Daha belirgin bir renk
-    },
-    accountList: {
-      paddingBottom: 100, // Alt boşluk (butonun üzerine çıkmasını önlemek için)
-    },
-    accountCard: {
-      backgroundColor: "#fff",
-      padding: 15,
-      borderRadius: 10,
-      marginBottom: 15,
-      shadowColor: "#000",
-      shadowOffset: { width: 0, height: 2 },
-      shadowOpacity: 0.1,
-      shadowRadius: 5,
-      elevation: 3,
-    },
-    accountInfo: {
-      flexDirection: "row",
-      alignItems: "center",
-      marginBottom: 10,
-    },
-    avatar: {
-      width: 50,
-      height: 50,
-      borderRadius: 25,
-      marginRight: 15,
-    },
-    accountName: {
-      fontSize: 18,
-      fontWeight: "bold",
-    },
-    accountEmail: {
-      fontSize: 14,
-      color: "#6c757d",
-    },
-    actions: {
-      flexDirection: "row",
-      justifyContent: "space-between",
-    },
-    button: {
-      backgroundColor: "#28a745",
-      paddingVertical: 8,
-      paddingHorizontal: 12,
-      borderRadius: 5,
-    },
-    buttonText: {
-      color: "#fff",
-      fontSize: 14,
-    },
-    addButton: {
-        width : '100%',
-      backgroundColor: "#28a745",
-      padding: 15,
-      borderRadius: 10,
-      alignItems: "center",
-      position: "absolute", // Butonu sabitliyoruz
-      bottom: 20, // Ekranın altından 20 birim yukarıda
-      marginBottom : 50,
-      alignSelf: "center", // Yatayda ortalıyoruz
-    },
-    addButtonText: {
-      color: "#fff",
-      fontSize: 16,
-      fontWeight: "bold",
-    },
-  });
-  
 
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#f8f9fa",
+  },
+  header: {
+    height: 100,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    paddingHorizontal: 20,
+    paddingTop: 50, // Safe area için
+  },
+  headerText: {
+    color: "#fff",
+    fontSize: 22,
+    fontWeight: "bold",
+  },
+  accountList: {
+    paddingBottom: 100,
+  },
+  accountCard: {
+    backgroundColor: "#fff",
+    padding: 15,
+    borderRadius: 10,
+    marginBottom: 15,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 5,
+    elevation: 3,
+  },
+  accountInfo: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 10,
+  },
+  avatar: {
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    marginRight: 15,
+  },
+  accountName: {
+    fontSize: 18,
+    fontWeight: "bold",
+  },
+  accountEmail: {
+    fontSize: 14,
+    color: "#6c757d",
+  },
+  actions: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  button: {
+    backgroundColor: "#28a745",
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+    borderRadius: 5,
+  },
+  buttonText: {
+    color: "#fff",
+    fontSize: 14,
+  },
+  addButton: {
+    width: "100%",
+    backgroundColor: "#28a745",
+    padding: 15,
+    borderRadius: 10,
+    alignItems: "center",
+    position: "absolute",
+    bottom: 20,
+    marginBottom: 50,
+    alignSelf: "center",
+  },
+  addButtonText: {
+    color: "#fff",
+    fontSize: 16,
+    fontWeight: "bold",
+  },
+});
 
 export default AccountManagementScreen;

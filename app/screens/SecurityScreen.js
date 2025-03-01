@@ -1,9 +1,10 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Alert, Switch } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Alert, Switch, ImageBackground } from 'react-native';
+import { SafeAreaView } from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
-const SecurityScreen = () => {
+const SecurityScreen = ({ navigation }) => {
   const [emailVerificationEnabled, setEmailVerificationEnabled] = React.useState(false);
-  const [smsVerificationEnabled, setSmsVerificationEnabled] = React.useState(false);
   const [cameraPermission, setCameraPermission] = React.useState(false);
   const [microphonePermission, setMicrophonePermission] = React.useState(false);
 
@@ -11,110 +12,122 @@ const SecurityScreen = () => {
     Alert.alert('Hesap Kurtarma', 'E-posta ile hesap kurtarma talebi gönderildi.');
   };
 
-  const handleSmsRecovery = () => {
-    Alert.alert('Hesap Kurtarma', 'SMS ile hesap kurtarma talebi gönderildi.');
-  };
-
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Güvenlik Ayarları</Text>
+    <SafeAreaView style={styles.container}>
+      {/* Header */}
+      <ImageBackground source={require('../assets/app_head_bar.png')} style={styles.header}>
+        <TouchableOpacity onPress={() => navigation.goBack()}> 
+          <Icon name="arrow-left" size={24} color="#fff" />
+        </TouchableOpacity>
+        <Text style={styles.headerText}>Güvenlik Ayarları</Text>
+        <Icon name="shield" size={24} color="#fff" />
+      </ImageBackground>
 
-      {/* Email Verification */}
-      <View style={styles.optionContainer}>
-        <Text style={styles.optionLabel}>E-posta Doğrulama:</Text>
-        <Switch
-          value={emailVerificationEnabled}
-          onValueChange={() => setEmailVerificationEnabled(!emailVerificationEnabled)}
-        />
+      <View style={styles.container}>
+        <View style={styles.sectionContainer}>
+          <Text style={styles.sectionTitle}>Doğrulama</Text>
+          <View style={styles.optionContainer}>
+            <Text style={styles.optionLabel}>E-posta Doğrulama</Text>
+            <Switch
+              value={emailVerificationEnabled}
+              onValueChange={() => setEmailVerificationEnabled(!emailVerificationEnabled)}
+            />
+          </View>
+        </View>
+
+        <View style={styles.sectionContainer}>
+          <Text style={styles.sectionTitle}>Cihaz İzinleri</Text>
+          <View style={styles.optionContainer}>
+            <Text style={styles.optionLabel}>Kamera İzni</Text>
+            <Switch
+              value={cameraPermission}
+              onValueChange={() => setCameraPermission(!cameraPermission)}
+            />
+          </View>
+
+          <View style={styles.optionContainer}>
+            <Text style={styles.optionLabel}>Mikrofon İzni</Text>
+            <Switch
+              value={microphonePermission}
+              onValueChange={() => setMicrophonePermission(!microphonePermission)}
+            />
+          </View>
+        </View>
+
+        <View style={styles.sectionContainer}>
+          <Text style={styles.sectionTitle}>Hesap Kurtarma</Text>
+          <TouchableOpacity style={styles.button} onPress={handleEmailRecovery}>
+            <Text style={styles.buttonText}>E-posta ile Kurtarma</Text>
+          </TouchableOpacity>
+        </View>
       </View>
-
-      {/* SMS Verification */}
-      <View style={styles.optionContainer}>
-        <Text style={styles.optionLabel}>SMS Doğrulama:</Text>
-        <Switch
-          value={smsVerificationEnabled}
-          onValueChange={() => setSmsVerificationEnabled(!smsVerificationEnabled)}
-        />
-      </View>
-
-      {/* Permissions */}
-      <Text style={styles.sectionTitle}>Cihaz İzinleri</Text>
-
-      <View style={styles.optionContainer}>
-        <Text style={styles.optionLabel}>Kamera İzni:</Text>
-        <Switch
-          value={cameraPermission}
-          onValueChange={() => setCameraPermission(!cameraPermission)}
-        />
-      </View>
-
-      <View style={styles.optionContainer}>
-        <Text style={styles.optionLabel}>Mikrofon İzni:</Text>
-        <Switch
-          value={microphonePermission}
-          onValueChange={() => setMicrophonePermission(!microphonePermission)}
-        />
-      </View>
-
-      {/* Account Recovery */}
-      <Text style={styles.sectionTitle}>Hesap Kurtarma</Text>
-
-      <TouchableOpacity style={styles.button} onPress={handleEmailRecovery}>
-        <Text style={styles.buttonText}>E-posta ile Kurtarma</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity style={styles.button} onPress={handleSmsRecovery}>
-        <Text style={styles.buttonText}>SMS ile Kurtarma</Text>
-      </TouchableOpacity>
-    </View>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f7fafc',
-    padding: 50,
+    backgroundColor: '#f4f4f4',
+    padding: 20,
   },
-  title: {
-    fontSize: 28,
-    fontWeight: '500',
-    textAlign: 'center',
-    marginBottom: 30, // Daha fazla boşluk
-    color: '#2c3e50',
+  header: {
+    height: 100,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: 20,
+    paddingTop: 50, // Safe area için
+  },
+  headerText: {
+    color: '#fff',
+    fontSize: 22,
+    fontWeight: 'bold',
+  },
+  sectionContainer: {
+    backgroundColor: '#ffffff',
+    padding: 15,
+    borderRadius: 10,
+    marginBottom: 20,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
   },
   sectionTitle: {
-    fontSize: 20,
-    fontWeight: '700',
-    marginTop: 40, // Daha fazla boşluk
+    fontSize: 18,
+    fontWeight: 'bold',
     marginBottom: 15,
-    color: '#34495e',
+    color: '#555',
   },
   optionContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    marginBottom: 30, // Daha fazla boşluk
+    paddingVertical: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: '#ddd',
   },
   optionLabel: {
     fontSize: 16,
-    color: '#2c3e50',
+    color: '#444',
   },
   button: {
-    backgroundColor: '#4CAF50', // Yeni yeşil tonu
-    paddingVertical: 15,
-    borderRadius: 12, // Hafif daha yuvarlak kenar
+    backgroundColor: '#4CAF50',
+    paddingVertical: 12,
+    borderRadius: 8,
     alignItems: 'center',
-    marginTop: 25, // Daha fazla boşluk
+    marginTop: 15,
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 3 }, // Daha belirgin gölge
-    shadowOpacity: 0.15,
-    shadowRadius: 5,
-    elevation: 3,
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 3,
+    elevation: 2,
   },
   buttonText: {
-    color: '#ffffff',
-    fontSize: 17, // Biraz daha büyük metin
+    color: '#fff',
+    fontSize: 16,
     fontWeight: '600',
   },
 });
