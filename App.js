@@ -16,6 +16,7 @@ import PersonalScreen from './app/screens/PersonalScreen';
 import ChangePasswordScreen from './app/screens/ChangePasswordScreen';
 import SecurityScreen from './app/screens/SecurityScreen';
 import AccountManagementScreen from './app/screens/AccountManagementScreen';
+import EducationScreen from './app/screens/EducationScreen';
 
 const Stack = createStackNavigator();
 
@@ -102,6 +103,12 @@ export default function App() {
           name="AccountManagement"
           component={AccountManagementScreen}
           options={{ headerShown: false ,title: 'Hesapaları Yönet' }}
+        />
+                
+        <Stack.Screen
+          name="Education"
+          component={EducationScreen}
+          options={{ headerShown: false ,title: 'Eğitimlerim' }}
         />
       </Stack.Navigator>
     </NavigationContainer>
