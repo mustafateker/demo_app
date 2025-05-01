@@ -9,6 +9,9 @@ import ProfileScreen from './app/screens/ProfileScreen';
 import NotificationScreen from './app/screens/NotificationScreen';
 import SearchScreen from './app/screens/SearchScreen';
 import TasksScreen from './app/screens/TasksScreen';
+import SiribotScreen from './app/screens/SiribotScreen';
+import ForgetPasswordScreen from './app/screens/ForgetPasswordScreen';
+
 
 const Stack = createStackNavigator();
 
@@ -58,6 +61,16 @@ export default function App() {
           name="Tasks"
           component={TasksScreen}
           options={{ headerShown: false ,title: 'Görevlerim' }}
+        />
+        <Stack.Screen
+          name="Siribot"
+          component={SiribotScreen}
+          options={{ headerShown: false ,title: 'Siribot Ekranım' }}
+        />
+        <Stack.Screen
+          name="Password"
+          component={ForgetPasswordScreen}
+          options={{ headerShown: false ,title: 'Parolamı Unuttum' }}
         />
         
       </Stack.Navigator>

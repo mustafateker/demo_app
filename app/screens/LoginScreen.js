@@ -20,7 +20,7 @@ const LoginScreen = () => {
   const navigation = useNavigation();
 
   const handlePress = () => {
-    Alert.alert("Giriş Başarılı");
+    Alert.alert('Giriş Yapıldı', 'Başarılı bir şekilde giriş yaptınız.', );
     navigation.navigate('Welcome');
   };
 
@@ -59,15 +59,22 @@ const LoginScreen = () => {
             isChecked={rememberMe}
             onClick={() => setRememberMe(!rememberMe)}
             style={styles.checkbox}
-          />
+            tintColors={{ true: '#FFFFFF', false: '#FFFFFF' }}
+            
+            />
           <Text style={styles.label}>Beni Hatırla</Text>
         </View>
 
-        <TouchableOpacity style={styles.loginButton} onPress={handlePress}>
-          <Text style={styles.loginButtonText}>GİRİŞ YAP</Text>
+        <TouchableOpacity 
+        style={styles.loginButton} 
+        onPress={handlePress}>
+        <Text style={styles.loginButtonText}>GİRİŞ YAP</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.forgotPasswordButton}>
+        <TouchableOpacity 
+        style={styles.forgotPasswordButton}
+        onPress={() => navigation.navigate('Password')}
+        >
           <Text style={styles.forgotPassword}>Parolamı Unuttum</Text>
         </TouchableOpacity>
 
@@ -89,6 +96,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   container: {
+    marginVertical: 60,
     paddingHorizontal: 20,
     alignItems: 'center',
   },
@@ -96,13 +104,14 @@ const styles = StyleSheet.create({
     width: 300,
     height: 180,
     resizeMode: 'contain',
-    marginBottom: 40,
+   
   },
   loginText: {
-    fontSize: 24,
+    fontSize: 40,
     fontWeight: 'bold',
     color: '#FFF',
     marginBottom: 20,
+    marginTop : 10,
   },
   input: {
     width: '100%',
@@ -143,6 +152,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     alignItems: 'center',
     marginBottom: 10,
+    
   },
   loginButtonText: {
     color: '#FFF',
